@@ -1,2 +1,1 @@
 # objektinis-programavimas
-Project PVZ

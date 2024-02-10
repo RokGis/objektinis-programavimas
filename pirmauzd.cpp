@@ -41,7 +41,11 @@ int main()
         cout << "Iveskite studento " << m << " namu darbu rezultatus: " << endl;
         for (int j = 0; j < m; j++)
         {
-            cin>> A[i].ndrez[j];
+            while (!(cin >> A[i].ndrez[j]) || A[i].ndrez[j] < 0 || A[i].ndrez[j] > 10) {
+            cout << "Netinkamas ivesties formatas arba pazymys neturi buti mazesnis nei 0 arba didesnis nei 10. Iveskite pazymi nuo 0 iki 10: " << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
             sum += A[i].ndrez[j];
         }
         vid = sum / m;

@@ -18,14 +18,14 @@ int main()
     double vid;
 
     cout << "Iveskite studentu skaiciu (naturalusis skaicius): ";
-    while (!(cin >> n) || n <= 0) {
+    while (!(cin >> m) || m <= 0) {
         cout << "Netinkamas ivesties formatas. Iveskite naturaluji skaiciu: " << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     cout << "Iveskite studentu namu darbu pazymiu skaiciu (naturalusis skaicius): ";
-    while (!(cin >> m) || m <= 0) {
+    while (!(cin >> n) || n <= 0) {
         cout << "Netinkamas ivesties formatas. Iveskite naturaluji skaiciu: " << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -36,16 +36,16 @@ int main()
     cin >> budas;
 
     studentas A[n];
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < m; i++)
     {
         sum = 0;
         cout << "Iveskite studento varda ir pavarde: ";
         cin >> A[i].vardas >> A[i].pavarde;
 
-        A[i].ndrez = new int[m];
+        A[i].ndrez = new int[n];
 
-        cout << "Iveskite studento " << m << " namu darbu rezultatus: " << endl;
-        for (int j = 0; j < m; j++)
+        cout << "Iveskite studento " << n << " namu darbu rezultatus: " << endl;
+        for (int j = 0; j < n; j++)
         {
             while (!(cin >> A[i].ndrez[j]) || A[i].ndrez[j] < 0 || A[i].ndrez[j] > 10) {
             cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
@@ -54,14 +54,14 @@ int main()
             }
             sum += A[i].ndrez[j];
         }
-        vid = sum / (m * 1.0);
+        vid = sum / (n * 1.0);
 
-        sort(A[i].ndrez, A[i].ndrez + m);
+        sort(A[i].ndrez, A[i].ndrez + n);
         double mediana;
-        if (m % 2 == 0) {
-            mediana = (A[i].ndrez[m / 2 - 1] + A[i].ndrez[m / 2]) / 2.0;
+        if (n % 2 == 0) {
+            mediana = (A[i].ndrez[n / 2 - 1] + A[i].ndrez[n / 2]) / 2.0;
         } else {
-            mediana = A[i].ndrez[m / 2];
+            mediana = A[i].ndrez[n / 2];
         }
 
         cout << "Iveskite studento egzamino rezultata: ";
@@ -82,7 +82,7 @@ int main()
     else if (budas=='m'){
         cout << "Vardas\tPavarde\tGalutinis (Med.)" << endl;}
     cout << "-----------------------------------------------------" << endl;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < m; i++)
     {
         cout << A[i].vardas << "\t" << A[i].pavarde << "\t" << fixed << setprecision(2) << A[i].gbalas << endl;
     }

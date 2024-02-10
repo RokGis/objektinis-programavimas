@@ -31,30 +31,57 @@ int main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
+    char budas;
+    cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
+    cin >> budas;
+
     studentas A[n];
     for(int i = 0; i < n; i++)
     {
         sum = 0;
         cout << "Iveskite studento varda ir pavarde: ";
         cin >> A[i].vardas >> A[i].pavarde;
+
         A[i].ndrez = new int[m];
+
         cout << "Iveskite studento " << m << " namu darbu rezultatus: " << endl;
         for (int j = 0; j < m; j++)
         {
             while (!(cin >> A[i].ndrez[j]) || A[i].ndrez[j] < 0 || A[i].ndrez[j] > 10) {
-            cout << "Netinkamas ivesties formatas arba pazymys neturi buti mazesnis nei 0 arba didesnis nei 10. Iveskite pazymi nuo 0 iki 10: " << endl;
+            cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             sum += A[i].ndrez[j];
         }
-        vid = sum / m;
+        vid = sum / (m * 1.0);
+
+        sort(A[i].ndrez, A[i].ndrez + m);
+        double mediana;
+        if (m % 2 == 0) {
+            mediana = (A[i].ndrez[m / 2 - 1] + A[i].ndrez[m / 2]) / 2.0;
+        } else {
+            mediana = A[i].ndrez[m / 2];
+        }
+
         cout << "Iveskite studento egzamino rezultata: ";
-        cin >> A[i].erez;
-        A[i].gbalas = 0.4 * vid + 0.6 * A[i].erez;
+        while (!(cin >> A[i].erez) || A[i].erez < 0 || A[i].erez > 10) {
+            cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+        if (budas=='v'){
+            A[i].gbalas = 0.4 * vid + 0.6 * A[i].erez;}
+        else if (budas=='m'){
+            A[i].gbalas = 0.4 * mediana + 0.6 * A[i].erez;}
     }
-    cout << "Vardas\tPavarde\tGalutinis (Vid.)" << endl;
-    cout << "--------------------------------------" << endl;
+
+    if (budas=='v'){
+        cout << "Vardas\tPavarde\tGalutinis (Vid.)" << endl;}
+    else if (budas=='m'){
+        cout << "Vardas\tPavarde\tGalutinis (Med.)" << endl;}
+    cout << "-----------------------------------------------------" << endl;
     for (int i = 0; i < n; i++)
     {
         cout << A[i].vardas << "\t" << A[i].pavarde << "\t" << fixed << setprecision(2) << A[i].gbalas << endl;

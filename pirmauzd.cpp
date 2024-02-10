@@ -49,10 +49,10 @@ int main()
         cin >> A[i].erez;
         A[i].gbalas = 0.4 * vid + 0.6 * A[i].erez;
     }
-    cout << "Vardas   Pavarde    Galutinis (Vid.)" << endl;
+    cout << "Vardas\tPavarde\tGalutinis (Vid.)" << endl;
     cout << "--------------------------------------" << endl;
     for (int i = 0; i < n; i++)
     {
-        cout << A[i].vardas << "    " << A[i].pavarde << "  " << fixed << setprecision(2) << A[i].gbalas << endl;
+        cout << A[i].vardas << "\t" << A[i].pavarde << "\t" << fixed << setprecision(2) << A[i].gbalas << endl;
     }
 }

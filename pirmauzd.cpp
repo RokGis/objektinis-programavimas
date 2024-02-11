@@ -9,13 +9,14 @@ struct studentas
     string vardas;
     string pavarde;
     int *ndrez;
+    int n;
     int erez;
     double gbalas;
 };
 
 int main()
 {
-    int n = 0, m = 0, sum = 0;
+    int m = 0, sum = 0;
     double vid;
 
     // cout << "Iveskite studentu skaiciu (naturalusis skaicius): ";
@@ -75,23 +76,23 @@ int main()
                 cin>>pazymys;
                 }
 
-            int* temp = new int[n + 1];
-            for (int i = 0; i < n; ++i) {
+            int* temp = new int[A[m].n + 1];
+            for (int i = 0; i < A[m].n; i++) {
                 temp[i] = A[m].ndrez[i];
                 }
             delete[] A[m].ndrez;
             A[m].ndrez = temp;
-            A[m].ndrez[n++] = pazymys;
+            A[m].ndrez[A[m].n++] = pazymys;
             sum += pazymys;
             }
-        vid = sum / (n * 1.0);
+        vid = sum / (A[m].n * 1.0);
 
-        sort(A[m].ndrez, A[m].ndrez + n);
+        sort(A[m].ndrez, A[m].ndrez + A[m].n);
         double mediana;
-        if (n % 2 == 0) {
-            mediana = (A[m].ndrez[n / 2 - 1] + A[m].ndrez[n / 2]) / 2.0;
+        if (A[m].n % 2 == 0) {
+            mediana = (A[m].ndrez[A[m].n / 2 - 1] + A[m].ndrez[A[m].n / 2]) / 2.0;
         } else {
-            mediana = A[m].ndrez[n / 2];
+            mediana = A[m].ndrez[A[m].n / 2];
         }
 
         cout << "Iveskite studento egzamino rezultata: ";
@@ -105,7 +106,7 @@ int main()
             A[m].gbalas = 0.4 * vid + 0.6 * A[m].erez;}
         else if (budas=='m'){
             A[m].gbalas = 0.4 * mediana + 0.6 * A[m].erez;}
-        m++;
+            m++;
     }
 
     if (budas=='v'){

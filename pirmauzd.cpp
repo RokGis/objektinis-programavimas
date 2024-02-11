@@ -63,18 +63,25 @@ int main()
         cin >> A[m].pavarde;
 
         A[m].ndrez = new int[1];
-        while (true) {
+        cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;
+        while (true)
+        {
             int pazymys;
-            cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: "; 
-            cin>>pazymys;
-            if (pazymys == 11) {
-                break;}
-            while (pazymys < 0 || pazymys > 10) {
-                cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: ";
+            cout << "Iveskite pazymi nuo 0 iki 10: ";
+            if (!(cin >> pazymys))
+            {
+                cout << "Netinkamas ivesties formatas. ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cin>>pazymys;
-                }
+                continue;
+            }
+            if (pazymys == 11) {
+                break;}
+            if (pazymys < 0 || pazymys > 10)
+            {
+                cout << "Netinkamas ivesties formatas. ";
+                continue;
+            }
 
             int* temp = new int[A[m].n + 1];
             for (int i = 0; i < A[m].n; i++) {
@@ -84,7 +91,7 @@ int main()
             A[m].ndrez = temp;
             A[m].ndrez[A[m].n++] = pazymys;
             sum += pazymys;
-            }
+        }
         vid = sum / (A[m].n * 1.0);
 
         sort(A[m].ndrez, A[m].ndrez + A[m].n);

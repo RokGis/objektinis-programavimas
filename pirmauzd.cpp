@@ -54,35 +54,36 @@ int main()
 
         sum = 0;
         cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
-        cin >> A[m].vardas >> A[m].pavarde;
+        cin >> A[m].vardas;
         if (A[m].vardas == "11")
         {
             break;
         }
+        cin >> A[m].pavarde;
 
-        cout << "Iveskite studento namu darbu rezultatus (0-10) arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;
         A[m].ndrez = new int[1];
-        while (true){
+        while (true) {
             int pazymys;
-            cin >> pazymys;
+            cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: "; 
+            cin>>pazymys;
             if (pazymys == 11) {
-                break;
-            }
-            while (pazymys < 0 || pazymys > 10)
-            {
-                cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
+                break;}
+            while (pazymys < 0 || pazymys > 10) {
+                cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cin >> pazymys;
-            }
-            int *temp = new int[n + 1];
-            for (int i = 0; i < n; i++){
+                cin>>pazymys;
+                }
+
+            int* temp = new int[n + 1];
+            for (int i = 0; i < n; ++i) {
                 temp[i] = A[m].ndrez[i];
-            }
+                }
             delete[] A[m].ndrez;
+            A[m].ndrez = temp;
             A[m].ndrez[n++] = pazymys;
             sum += pazymys;
-        }
+            }
         vid = sum / (n * 1.0);
 
         sort(A[m].ndrez, A[m].ndrez + n);

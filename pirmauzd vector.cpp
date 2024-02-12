@@ -9,7 +9,7 @@ struct studentas
 {
     string vardas;
     string pavarde;
-    vector<int> ndrez;
+    vector<int> ndrez; //sudaromas vektorius
     int erez;
     double gbalas;
 };
@@ -23,7 +23,7 @@ int main()
     cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
     cin >> budas;
 
-    vector<studentas> A;
+    vector<studentas> A; //sudaromas vektorius
 
     while(true)
     {
@@ -58,7 +58,7 @@ int main()
                 continue;
             }
 
-            new_studentas.ndrez.push_back(pazymys);
+            new_studentas.ndrez.push_back(pazymys); // pridedamas elementas i gala
             sum += pazymys;
         }
         vid = sum / (new_studentas.ndrez.size() * 1.0);
@@ -85,18 +85,17 @@ int main()
         else if (budas=='m'){
             new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;}
 
-        A.push_back(new_studentas);
-        m++;
+        A.push_back(new_studentas); // pridedamas elementas i gala
     }
 
     if (budas=='v'){
-        cout << "Vardas\tPavarde\tGalutinis (Vid.)" << endl;}
+        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << endl;}
     else if (budas=='m'){
-        cout << "Vardas\tPavarde\tGalutinis (Med.)" << endl;}
+         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Med.)" << endl;}
     cout << "-----------------------------------------------------" << endl;
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < A.size(); i++)
     {
-        cout << A[i].vardas << "\t" << A[i].pavarde << "\t" << fixed << setprecision(2) << A[i].gbalas << endl;
+        cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
     return 0;
 }

@@ -42,7 +42,7 @@ int main()
     pavardes.push_back("Gavenas");
     pavardes.push_back("Gruodis");
 
-    int sum = 0;
+    int m = 0, sum = 0;
     double vid;
 
     srand(time(nullptr));
@@ -50,6 +50,7 @@ int main()
     int ivedbudas;
     cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
     cin >> ivedbudas;
+    
     if (ivedbudas != 4){
     char budas;
     cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
@@ -76,7 +77,7 @@ int main()
             if (ivedbudas == 3)
             {
                 new_studentas.vardas = vardai[rand() % vardai.size()];
-                if (new_studentas.vardas == "11")
+                if (new_studentas.vardas == "11" && m != 0)
                 {
                     break;
                 }
@@ -89,22 +90,27 @@ int main()
             cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
         while (true)
         {
-            if (ivedbudas == 1){
-            cout << "Iveskite pazymi nuo 0 iki 10: ";
-            if (!(cin >> pazymys))
+            int n = 0;
+            if (ivedbudas == 1)
             {
-                cout << "Netinkamas ivesties formatas. ";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                continue;
-            }
-            if (pazymys == 11) {
-                break;}
-            if (pazymys < 0 || pazymys > 10)
-            {
-                cout << "Netinkamas ivesties formatas. ";
-                continue;
-            }
+                cout << "Iveskite pazymi nuo 0 iki 10: ";
+                if (!(cin >> pazymys))
+                {
+                    cout << "Netinkamas ivesties formatas. ";
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+                if (pazymys == 11 && n != 0)
+                {
+                    break;
+                }
+                if (pazymys < 0 || pazymys > 10)
+                {
+                    cout << "Netinkamas ivesties formatas. ";
+                    continue;
+                }
+                n++;
             }
 
         if (ivedbudas == 2 || ivedbudas == 3)
@@ -151,7 +157,8 @@ int main()
             }
 
         A.push_back(new_studentas); // pridedamas elementas i gala
-    }
+        m++;
+        }
 
     if (budas=='v'){
         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << endl;}

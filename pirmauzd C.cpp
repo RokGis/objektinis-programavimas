@@ -25,7 +25,7 @@ int main()
     int pavardesS = sizeof(pavardes) / sizeof(pavardes[0]);
 
     int m = 0, sum = 0;
-    double vid;
+    double vid, mediana;
 
     int ivedbudas;
     cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
@@ -113,18 +113,21 @@ int main()
             A[m].ndrez[A[m].n++] = pazymys;
             sum += pazymys;
         }
-        if (A[m].n != 0)
+        if (A[m].n == 0)
+        {
+            vid = 0;
+            mediana = 0;
+        } 
+        else
         {
             vid = sum / (A[m].n * 1.0);
-        }
 
         sort(A[m].ndrez, A[m].ndrez + A[m].n);
-        double mediana;
         if (A[m].n % 2 == 0) {
             mediana = (A[m].ndrez[A[m].n / 2 - 1] + A[m].ndrez[A[m].n / 2]) / 2.0;
         } else {
             mediana = A[m].ndrez[A[m].n / 2];
-        }
+        }}
         if (ivedbudas == 1)
         {
         cout << "Iveskite studento egzamino rezultata: ";

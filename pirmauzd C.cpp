@@ -16,9 +16,22 @@ struct studentas
 
 int main()
 {
+    srand(time(nullptr));
+
+    string vardai[] = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas", "11" };
+    string pavardes[] = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis" };
+
+    int vardaiS = sizeof(vardai) / sizeof(vardai[0]);
+    int pavardesS = sizeof(pavardes) / sizeof(pavardes[0]);
+
     int m = 0, sum = 0;
     double vid;
 
+    int ivedbudas;
+    cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
+    cin >> ivedbudas;
+
+    if (ivedbudas != 4){
     char budas;
     cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
     cin >> budas;
@@ -40,19 +53,33 @@ int main()
         }
 
         sum = 0;
-        cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
-        cin >> A[m].vardas;
-        if (A[m].vardas == "11")
+        if (ivedbudas == 1 || ivedbudas == 2)
         {
-            break;
+            cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
+            cin >> A[m].vardas;
+            if (A[m].vardas == "11")
+            {
+                break;
+            }
+            cin >> A[m].pavarde;
         }
-        cin >> A[m].pavarde;
-
+        if (ivedbudas == 3)
+        {
+            A[m].vardas = vardai[rand() % vardaiS];
+            if (A[m].vardas == "11")
+            {
+                break;
+            }
+            A[m].pavarde = pavardes[rand() % pavardesS];
+        }
         A[m].ndrez = new int[1];
-        cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;
+
+        if (ivedbudas == 1){
+        cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
         while (true)
         {
             int pazymys;
+            if (ivedbudas == 1){
             cout << "Iveskite pazymi nuo 0 iki 10: ";
             if (!(cin >> pazymys))
             {
@@ -68,6 +95,14 @@ int main()
                 cout << "Netinkamas ivesties formatas. ";
                 continue;
             }
+            }
+
+            if (ivedbudas == 2 || ivedbudas == 3)
+        {
+            pazymys = rand() % 12;
+            if (pazymys == 11) {
+                break;}
+        }
 
             int* temp = new int[A[m].n + 1];
             for (int i = 0; i < A[m].n; i++) {
@@ -78,7 +113,10 @@ int main()
             A[m].ndrez[A[m].n++] = pazymys;
             sum += pazymys;
         }
-        vid = sum / (A[m].n * 1.0);
+        if (A[m].n != 0)
+        {
+            vid = sum / (A[m].n * 1.0);
+        }
 
         sort(A[m].ndrez, A[m].ndrez + A[m].n);
         double mediana;
@@ -87,14 +125,19 @@ int main()
         } else {
             mediana = A[m].ndrez[A[m].n / 2];
         }
-
+        if (ivedbudas == 1)
+        {
         cout << "Iveskite studento egzamino rezultata: ";
         while (!(cin >> A[m].erez) || A[m].erez < 0 || A[m].erez > 10) {
             cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
-
+        }
+        if (ivedbudas == 2 || ivedbudas == 3)
+        {
+            A[m].erez = rand() % 11;
+        }
         if (budas=='v'){
             A[m].gbalas = 0.4 * vid + 0.6 * A[m].erez;}
         else if (budas=='m'){
@@ -103,15 +146,17 @@ int main()
     }
 
     if (budas=='v'){
-        cout << "Vardas\tPavarde\tGalutinis (Vid.)" << endl;}
+        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << endl;}
     else if (budas=='m'){
-        cout << "Vardas\tPavarde\tGalutinis (Med.)" << endl;}
+        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Med.)" << endl;}
     cout << "-----------------------------------------------------" << endl;
     for (int i = 0; i < m; i++)
     {
-        cout << A[i].vardas << "\t" << A[i].pavarde << "\t" << fixed << setprecision(2) << A[i].gbalas << endl;
+        cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
         delete[] A[i].ndrez;
     }
     delete[] A;
+    }
+    else {return 0;}
     return 0;
 }

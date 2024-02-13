@@ -42,8 +42,8 @@ int main()
     pavardes.push_back("Gavenas");
     pavardes.push_back("Gruodis");
 
-    int m = 0, sum = 0;
-    double vid;
+    int sum = 0;
+    double vid, mediana;
 
     srand(time(nullptr));
 
@@ -77,7 +77,7 @@ int main()
             if (ivedbudas == 3)
             {
                 new_studentas.vardas = vardai[rand() % vardai.size()];
-                if (new_studentas.vardas == "11" && m != 0)
+                if (new_studentas.vardas == "11")
                 {
                     break;
                 }
@@ -90,7 +90,6 @@ int main()
             cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
         while (true)
         {
-            int n = 0;
             if (ivedbudas == 1)
             {
                 cout << "Iveskite pazymi nuo 0 iki 10: ";
@@ -101,7 +100,7 @@ int main()
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     continue;
                 }
-                if (pazymys == 11 && n != 0)
+                if (pazymys == 11)
                 {
                     break;
                 }
@@ -110,7 +109,7 @@ int main()
                     cout << "Netinkamas ivesties formatas. ";
                     continue;
                 }
-                n++;
+                
             }
 
         if (ivedbudas == 2 || ivedbudas == 3)
@@ -122,16 +121,18 @@ int main()
             new_studentas.ndrez.push_back(pazymys); // pridedamas elementas i gala
             sum += pazymys;
         }
-        vid = sum / (new_studentas.ndrez.size() * 1.0);
-
-        sort(new_studentas.ndrez.begin(), new_studentas.ndrez.end());
-        double mediana;
-        if (new_studentas.ndrez.size() % 2 == 0) {
-            mediana = (new_studentas.ndrez[new_studentas.ndrez.size() / 2 - 1] + new_studentas.ndrez[new_studentas.ndrez.size() / 2]) / 2.0;
-        }
-        else
-        {
-            mediana = new_studentas.ndrez[new_studentas.ndrez.size() / 2];
+        if (new_studentas.ndrez.size() == 0) {
+            vid = 0;
+            mediana = 0;
+        } else {
+            vid = sum / (new_studentas.ndrez.size() * 1.0);
+            
+            sort(new_studentas.ndrez.begin(), new_studentas.ndrez.end());
+            if (new_studentas.ndrez.size() % 2 == 0) {
+                mediana = (new_studentas.ndrez[new_studentas.ndrez.size() / 2 - 1] + new_studentas.ndrez[new_studentas.ndrez.size() / 2]) / 2.0;
+            } else {
+                mediana = new_studentas.ndrez[new_studentas.ndrez.size() / 2];
+            }
         }
         if (ivedbudas == 1)
         {
@@ -156,8 +157,7 @@ int main()
                 new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
             }
 
-        A.push_back(new_studentas); // pridedamas elementas i gala
-        m++;
+        A.push_back(new_studentas); // pridedamas elementas i gala 
         }
 
     if (budas=='v'){

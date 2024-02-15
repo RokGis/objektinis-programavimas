@@ -17,6 +17,9 @@ struct studentas
     double gbalas;
 };
 
+void isvedimas(const vector<studentas> &A, char budas);
+void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);
+
 int main()
 {
     vector<string> vardai;
@@ -29,7 +32,6 @@ int main()
     vardai.push_back("Rokas");
     vardai.push_back("Matas");
     vardai.push_back("Lukas");
-    vardai.push_back("11");
 
     vector<string> pavardes;
     pavardes.push_back("Kazlauskas");
@@ -42,29 +44,36 @@ int main()
     pavardes.push_back("Gavenas");
     pavardes.push_back("Gruodis");
 
-    int sum = 0;
-    double vid, mediana;
 
     srand(time(nullptr));
 
     int ivedbudas;
     cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
-    cin >> ivedbudas;
+    while (!(cin >> ivedbudas) || ivedbudas > 4 || ivedbudas < 1)
+    {
+        cout << "Iveskite skaiciu (1-4): ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
     
     if (ivedbudas != 4){
     char budas;
     cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
-    cin >> budas;
+    while (!(cin >> budas) || (budas != 'v' && budas != 'm')) {
+        cout << "Iveskite 'v' arba 'm': ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
 
     vector<studentas> A; //sudaromas vektorius
     
+    if (ivedbudas == 1 || ivedbudas == 2)
+            {
         while (true)
         {
             studentas new_studentas;
 
-            sum = 0;
-            if (ivedbudas == 1 || ivedbudas == 2)
-            {
+
                 cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
                 cin >> new_studentas.vardas;
                 if (new_studentas.vardas == "11")
@@ -72,19 +81,59 @@ int main()
                     break;
                 }
                 cin >> new_studentas.pavarde;
+            pazymiuived(new_studentas, budas, ivedbudas);
+            A.push_back(new_studentas); // pridedamas elementas i gala 
+        }
+        isvedimas(A, budas);
             }
+    
+    if (ivedbudas == 3)
+{
+    int m;
+    cout << "Iveskite studentu skaiciu: ";
+    while (!(cin >> m) || m <= 0)
+    {
+        cout << "Iveskite skaiciu didesni uz 0: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
 
-            if (ivedbudas == 3)
-            {
-                new_studentas.vardas = vardai[rand() % vardai.size()];
-                if (new_studentas.vardas == "11")
-                {
-                    break;
-                }
-                new_studentas.pavarde = pavardes[rand() % pavardes.size()];
-            }
+    A.resize(m); // nustatyti vectoriaus dydi
 
-            int pazymys;
+    for (int i = 0; i < m; i++)
+    {
+        studentas new_studentas;
+        new_studentas.vardas = vardai[rand() % vardai.size()];
+        new_studentas.pavarde = pavardes[rand() % pavardes.size()];
+        pazymiuived(new_studentas, budas, ivedbudas);
+        A[i] = new_studentas;
+    }
+
+    isvedimas(A, budas);
+}
+    }
+    else {return 0;}
+    return 0;
+}
+void isvedimas(const vector<studentas>& A, char budas)
+{
+    if (budas=='v'){
+        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << endl;}
+    else if (budas=='m'){
+         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Med.)" << endl;}
+    cout << "-----------------------------------------------------" << endl;
+    for (int i = 0; i < A.size(); i++)
+    {
+        cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+    }
+
+}
+
+void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)
+{
+    int sum = 0;
+    double vid, mediana;
+    int pazymys;
         if (ivedbudas == 1)
         {
             cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
@@ -156,20 +205,4 @@ int main()
             {
                 new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
             }
-
-        A.push_back(new_studentas); // pridedamas elementas i gala 
-        }
-
-    if (budas=='v'){
-        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << endl;}
-    else if (budas=='m'){
-         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Med.)" << endl;}
-    cout << "-----------------------------------------------------" << endl;
-    for (int i = 0; i < A.size(); i++)
-    {
-        cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
-    }
-    }
-    else {return 0;}
-    return 0;
 }

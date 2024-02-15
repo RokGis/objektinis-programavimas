@@ -88,7 +88,7 @@ int main()
             }
     
     if (ivedbudas == 3)
-{
+    {
     int m;
     cout << "Iveskite studentu skaiciu: ";
     while (!(cin >> m) || m <= 0)
@@ -110,7 +110,7 @@ int main()
     }
 
     isvedimas(A, budas);
-}
+    }
     }
     else {return 0;}
     return 0;
@@ -126,7 +126,6 @@ void isvedimas(const vector<studentas>& A, char budas)
     {
         cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
-
 }
 
 void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)

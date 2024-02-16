@@ -15,7 +15,7 @@ struct studentas
 int main()
 {
     int n, m, sum = 0;
-    double vid;
+    double vid, mediana;
 
     cout << "Iveskite studentu skaiciu (naturalusis skaicius): ";
     while (!(cin >> n) || n <= 0) {
@@ -33,7 +33,12 @@ int main()
 
     char budas;
     cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
-    cin >> budas;
+    while (!(cin >> budas) || (budas != 'v' && budas != 'm'))
+    {
+        cout << "Iveskite 'v' arba 'm': ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
 
     studentas A[n];
     for(int i = 0; i < n; i++)
@@ -54,14 +59,20 @@ int main()
             }
             sum += A[i].ndrez[j];
         }
-        vid = sum / (m * 1.0);
-
-        sort(A[i].ndrez, A[i].ndrez + m);
-        double mediana;
-        if (m % 2 == 0) {
-            mediana = (A[i].ndrez[m / 2 - 1] + A[i].ndrez[m / 2]) / 2.0;
-        } else {
-            mediana = A[i].ndrez[m / 2];
+        if (m == 0)
+        {
+            vid = 0;
+            mediana = 0;
+        }
+        else
+        {
+            vid = sum / m;
+            sort(A[i].ndrez, A[i].ndrez + m);
+            if (m % 2 == 0) {
+                mediana = (A[i].ndrez[m / 2 - 1] + A[i].ndrez[m / 2]) / 2.0;
+            }
+            else {
+                mediana = A[i].ndrez[m / 2];}
         }
 
         cout << "Iveskite studento egzamino rezultata: ";

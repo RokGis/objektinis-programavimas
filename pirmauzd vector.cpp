@@ -44,7 +44,6 @@ int main()
     pavardes.push_back("Gavenas");
     pavardes.push_back("Gruodis");
 
-
     srand(time(nullptr));
 
     int ivedbudas;
@@ -56,61 +55,59 @@ int main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     
-    if (ivedbudas != 4){
-    char budas;
-    cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
-    while (!(cin >> budas) || (budas != 'v' && budas != 'm')) {
-        cout << "Iveskite 'v' arba 'm': ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-    vector<studentas> A; //sudaromas vektorius
-    
-    if (ivedbudas == 1 || ivedbudas == 2)
-            {
-        while (true)
+    if (ivedbudas != 4)
+    {
+        char budas;
+        cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
+        while (!(cin >> budas) || (budas != 'v' && budas != 'm'))
         {
-            studentas new_studentas;
+            cout << "Iveskite 'v' arba 'm': ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
 
-
+        vector<studentas> A; //sudaromas vektorius
+        
+        if (ivedbudas == 1 || ivedbudas == 2)
+        {
+            while (true)
+            {
+                studentas new_studentas;
                 cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
                 cin >> new_studentas.vardas;
-                if (new_studentas.vardas == "11")
-                {
-                    break;
-                }
+                if (new_studentas.vardas == "11"){
+                    break;}
                 cin >> new_studentas.pavarde;
-            pazymiuived(new_studentas, budas, ivedbudas);
-            A.push_back(new_studentas); // pridedamas elementas i gala 
-        }
-        isvedimas(A, budas);
+                pazymiuived(new_studentas, budas, ivedbudas);
+                A.push_back(new_studentas); // pridedamas elementas i gala 
             }
-    
-    if (ivedbudas == 3)
-    {
-    int m;
-    cout << "Iveskite studentu skaiciu: ";
-    while (!(cin >> m) || m <= 0)
-    {
-        cout << "Iveskite skaiciu didesni uz 0: ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
+            isvedimas(A, budas);
+        }
+        
+        if (ivedbudas == 3)
+        {
+            int m;
+            cout << "Iveskite studentu skaiciu: ";
+            while (!(cin >> m) || m <= 0)
+            {
+                cout << "Iveskite skaiciu didesni uz 0: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
 
-    A.resize(m); // nustatyti vectoriaus dydi
+            A.resize(m); // nustatyti vektoriaus dydi
 
-    for (int i = 0; i < m; i++)
-    {
-        studentas new_studentas;
-        new_studentas.vardas = vardai[rand() % vardai.size()];
-        new_studentas.pavarde = pavardes[rand() % pavardes.size()];
-        pazymiuived(new_studentas, budas, ivedbudas);
-        A[i] = new_studentas;
-    }
+            for (int i = 0; i < m; i++)
+            {
+                studentas new_studentas;
+                new_studentas.vardas = vardai[rand() % vardai.size()];
+                new_studentas.pavarde = pavardes[rand() % pavardes.size()];
+                pazymiuived(new_studentas, budas, ivedbudas);
+                A[i] = new_studentas;
+            }
 
-    isvedimas(A, budas);
-    }
+            isvedimas(A, budas);
+        }
     }
     else {return 0;}
     return 0;
@@ -133,32 +130,32 @@ void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)
     int sum = 0;
     double vid, mediana;
     int pazymys;
+    if (ivedbudas == 1){
+        cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
+    
+    while (true)
+    {
         if (ivedbudas == 1)
         {
-            cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
-        while (true)
-        {
-            if (ivedbudas == 1)
+            cout << "Iveskite pazymi nuo 0 iki 10: ";
+            if (!(cin >> pazymys))
             {
-                cout << "Iveskite pazymi nuo 0 iki 10: ";
-                if (!(cin >> pazymys))
-                {
-                    cout << "Netinkamas ivesties formatas. ";
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    continue;
-                }
-                if (pazymys == 11)
-                {
-                    break;
-                }
-                if (pazymys < 0 || pazymys > 10)
-                {
-                    cout << "Netinkamas ivesties formatas. ";
-                    continue;
-                }
-                
+                cout << "Netinkamas ivesties formatas. ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
             }
+            if (pazymys == 11)
+            {
+                break;
+            }
+            if (pazymys < 0 || pazymys > 10)
+            {
+                cout << "Netinkamas ivesties formatas. ";
+                continue;
+            }
+                
+        }
 
         if (ivedbudas == 2 || ivedbudas == 3)
         {
@@ -166,42 +163,46 @@ void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)
             if (pazymys == 11) {
                 break;}
         }
-            new_studentas.ndrez.push_back(pazymys); // pridedamas elementas i gala
-            sum += pazymys;
-        }
-        if (new_studentas.ndrez.size() == 0) {
-            vid = 0;
-            mediana = 0;
-        } else {
-            vid = sum / (new_studentas.ndrez.size() * 1.0);
+        new_studentas.ndrez.push_back(pazymys); // pridedamas elementas i gala
+        sum += pazymys;
+    }
+
+    if (new_studentas.ndrez.size() == 0)
+    {
+        vid = 0;
+        mediana = 0;
+    }
+    else 
+    {
+        vid = sum / (new_studentas.ndrez.size() * 1.0);
             
-            sort(new_studentas.ndrez.begin(), new_studentas.ndrez.end());
-            if (new_studentas.ndrez.size() % 2 == 0) {
-                mediana = (new_studentas.ndrez[new_studentas.ndrez.size() / 2 - 1] + new_studentas.ndrez[new_studentas.ndrez.size() / 2]) / 2.0;
-            } else {
-                mediana = new_studentas.ndrez[new_studentas.ndrez.size() / 2];
-            }
-        }
-        if (ivedbudas == 1)
-        {
+        sort(new_studentas.ndrez.begin(), new_studentas.ndrez.end());
+        if (new_studentas.ndrez.size() % 2 == 0) {
+            mediana = (new_studentas.ndrez[new_studentas.ndrez.size() / 2 - 1] + new_studentas.ndrez[new_studentas.ndrez.size() / 2]) / 2.0;}
+        else {
+                mediana = new_studentas.ndrez[new_studentas.ndrez.size() / 2];}
+    }
+    if (ivedbudas == 1)
+    {
         cout << "Iveskite studento egzamino rezultata nuo 0 iki 10: ";
-        while (!(cin >> new_studentas.erez) || new_studentas.erez < 0 || new_studentas.erez > 10) {
+        while (!(cin >> new_studentas.erez) || new_studentas.erez < 0 || new_studentas.erez > 10)
+        {
             cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
         }
-        if (ivedbudas == 2 || ivedbudas == 3)
-        {
-            new_studentas.erez = rand() % 11;
-        }
+    }
+    if (ivedbudas == 2 || ivedbudas == 3)
+    {
+        new_studentas.erez = rand() % 11;
+    }
 
-            if (budas == 'v')
-            {
-                new_studentas.gbalas = 0.4 * vid + 0.6 * new_studentas.erez;
-            }
-            else if (budas == 'm')
-            {
-                new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
-            }
+    if (budas == 'v')
+    {
+        new_studentas.gbalas = 0.4 * vid + 0.6 * new_studentas.erez;
+    }
+    else if (budas == 'm')
+    {
+        new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
+    }
 }

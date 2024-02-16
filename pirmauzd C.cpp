@@ -40,50 +40,50 @@ int main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    if (ivedbudas != 4){
-    char budas;
-    cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
-    while (!(cin >> budas) || (budas != 'v' && budas != 'm')) {
-        cout << "Iveskite 'v' arba 'm': ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-    if (ivedbudas == 1 || ivedbudas == 2)
-        {
-    studentas* A = nullptr; //masyvui paskiriama dinamine atmintis
-
-    while(true)
+    if (ivedbudas != 4)
     {
-        if (A == nullptr){
-            A = new studentas[1];
-        }
-        else {
-            studentas *temp = new studentas[m + 1];
-            for (int i = 0; i < m; i++){
-                temp[i] = A[i];
-            }
-            delete[] A;
-            A = temp;
-        }
-
-        cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
-        cin >> A[m].vardas;
-        if (A[m].vardas == "11")
+        char budas;
+        cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
+        while (!(cin >> budas) || (budas != 'v' && budas != 'm'))
         {
-            break;
+            cout << "Iveskite 'v' arba 'm': ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
-        cin >> A[m].pavarde;
 
-        A[m].ndrez = new int[1];
+        if (ivedbudas == 1 || ivedbudas == 2)
+        {
+            studentas* A = nullptr; //masyvui paskiriama dinamine atmintis
 
-        if (ivedbudas == 1){
-        cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;
-        }
-        pazymiuived(A, budas, m, ivedbudas);
-        m++;
-    }
-    isvedimas(A, budas, m);
+            while(true)
+            {
+                if (A == nullptr){
+                    A = new studentas[1];}
+                else 
+                {
+                    studentas *temp = new studentas[m + 1];
+                    for (int i = 0; i < m; i++){
+                        temp[i] = A[i];}
+                    delete[] A;
+                    A = temp;
+                }
+
+                cout << "Iveskite studento varda ir pavarde arba „11“, jeigu norite uzbaigti studentu vedima: ";
+                cin >> A[m].vardas;
+                if (A[m].vardas == "11")
+                {
+                    break;
+                }
+                cin >> A[m].pavarde;
+
+                A[m].ndrez = new int[1];
+
+                if (ivedbudas == 1){
+                cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
+                pazymiuived(A, budas, m, ivedbudas);
+                m++;
+            }
+            isvedimas(A, budas, m);
         }
 
         if (ivedbudas == 3)
@@ -108,6 +108,7 @@ int main()
     else {return 0;}
     return 0;
 }
+
 void isvedimas(studentas *A, char budas, int m)
 {
     if (budas=='v'){
@@ -117,7 +118,6 @@ void isvedimas(studentas *A, char budas, int m)
     cout << "-----------------------------------------------------" << endl;
     for (int i = 0; i < m; i++)
     {
-        
         cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
 }
@@ -126,17 +126,16 @@ void pazymiuived(studentas *A, char budas, int i, int ivedbudas)
 {
     int sum = 0;
     double vid, mediana;
-    if (A[i].ndrez == nullptr) {
-        A[i].ndrez = new int[1];
-    }
+    if (A[i].ndrez == nullptr){
+        A[i].ndrez = new int[1];}
 
-    if (ivedbudas == 1)
-    {
+    if (ivedbudas == 1){
         cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
-        while (true)
+    while (true)
+    {
+        int pazymys;
+        if (ivedbudas == 1)
         {
-            int pazymys;
-            if (ivedbudas == 1){
             cout << "Iveskite pazymi nuo 0 iki 10: ";
             if (!(cin >> pazymys))
             {
@@ -154,53 +153,56 @@ void pazymiuived(studentas *A, char budas, int i, int ivedbudas)
             }
             }
 
-            if (ivedbudas == 2 || ivedbudas == 3)
+        if (ivedbudas == 2 || ivedbudas == 3)
         {
             pazymys = rand() % 12;
             if (pazymys == 11) {
                 break;}
         }
 
-            int* temp = new int[A[i].n + 1];
-            for (int j = 0; j < A[i].n; j++) {
-                temp[j] = A[i].ndrez[j];
-                }
-            delete[] A[i].ndrez;
-            A[i].ndrez = temp;
-            A[i].ndrez[A[i].n++] = pazymys;
-            sum += pazymys;
+        int* temp = new int[A[i].n + 1];
+        for (int j = 0; j < A[i].n; j++)
+        {
+            temp[j] = A[i].ndrez[j];
         }
-        if (A[i].n == 0)
-        {
-            vid = 0;
-            mediana = 0;
-        } 
-        else
-        {
-            vid = sum / (A[i].n * 1.0);
+        delete[] A[i].ndrez;
+        A[i].ndrez = temp;
+        A[i].ndrez[A[i].n++] = pazymys;
+        sum += pazymys;
+    }
+    if (A[i].n == 0)
+    {
+        vid = 0;
+        mediana = 0;
+    } 
+    else
+    {
+        vid = sum / (A[i].n * 1.0);
 
         sort(A[i].ndrez, A[i].ndrez + A[i].n);
         if (A[i].n % 2 == 0) {
             mediana = (A[i].ndrez[A[i].n / 2 - 1] + A[i].ndrez[A[i].n / 2]) / 2.0;
-        } else {
-            mediana = A[i].ndrez[A[i].n / 2];
-        }}
-        if (ivedbudas == 1)
-        {
+        }
+        else {
+            mediana = A[i].ndrez[A[i].n / 2];}
+    }
+    if (ivedbudas == 1)
+    {
         cout << "Iveskite studento egzamino rezultata: ";
-        while (!(cin >> A[i].erez) || A[i].erez < 0 || A[i].erez > 10) {
+        while (!(cin >> A[i].erez) || A[i].erez < 0 || A[i].erez > 10)
+        {
             cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
         }
-        if (ivedbudas == 2 || ivedbudas == 3)
-        {
-            A[i].erez = rand() % 11;
-        }
-        if (budas=='v'){
-            A[i].gbalas = 0.4 * vid + 0.6 * A[i].erez;}
-        else if (budas=='m'){
-            A[i].gbalas = 0.4 * mediana + 0.6 * A[i].erez;}
-        delete[] A[i].ndrez;
+    }
+    if (ivedbudas == 2 || ivedbudas == 3)
+    {
+        A[i].erez = rand() % 11;
+    }
+    if (budas=='v'){
+        A[i].gbalas = 0.4 * vid + 0.6 * A[i].erez;}
+    else if (budas=='m'){
+        A[i].gbalas = 0.4 * mediana + 0.6 * A[i].erez;}
+    delete[] A[i].ndrez;
  }

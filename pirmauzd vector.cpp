@@ -7,6 +7,7 @@
 #include <ctime>
 #include <string>
 #include <fstream>
+#include <sstream> 
 using namespace std;
 
 struct studentas
@@ -18,11 +19,9 @@ struct studentas
     double gbalas;
 };
 
+void skaitymasisfailo(const vector<studentas> &A);
 void isvedimas(const vector<studentas> &A, char budas);
 void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);
-
-ifstream in("duomenys.txt");
-ofstream out("rezultatai.txt");
 
 int main()
 {
@@ -71,7 +70,9 @@ int main()
         }
 
         vector<studentas> A; //sudaromas vektorius
-        
+
+        skaitymasisfailo(A);
+
         if (ivedbudas == 1 || ivedbudas == 2)
         {
             while (true)
@@ -116,6 +117,30 @@ int main()
     else {return 0;}
     return 0;
 }
+
+void skaitymasisfailo(const vector<studentas>& A)
+{
+    vector<string> splited;
+    string eil;
+    stringstream my_buffer;
+
+    ifstream in("duomenys.txt");
+    my_buffer << in.rdbuf();
+    in.close();
+    while(my_buffer){
+        if(!my_buffer.eof()){
+        getline(my_buffer, eil);
+        splited.push_back(eil);}
+        else break;
+    }
+    string outputas="";
+    for (const string &a : splited) (a.compare(*splited.rbegin()) !=0) ? outputas+=a+"\n":outputas+=a;
+    splited.clear();
+    ofstream out("rezultatai.txt");
+    out << outputas;
+    out.close();
+}
+
 void isvedimas(const vector<studentas>& A, char budas)
 {
     if (budas=='v'){

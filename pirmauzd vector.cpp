@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <fstream>
 using namespace std;
 
 struct studentas
@@ -19,6 +20,9 @@ struct studentas
 
 void isvedimas(const vector<studentas> &A, char budas);
 void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);
+
+ifstream in("duomenys.txt");
+ofstream out("rezultatai.txt");
 
 int main()
 {

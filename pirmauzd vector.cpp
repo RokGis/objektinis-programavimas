@@ -24,6 +24,10 @@ void isvedimas(const vector<studentas> &A, char budas);
 void pazymiuived(studentas &new_studentas, char budas, int ivedbudas, char duomskait);
 void skaiciavimas(studentas &new_studentas, int sum, char budas);
 void irasymasifaila(vector<studentas> &A, char budas);
+bool rikiavimasgbalas(const studentas &a, const studentas &b);
+bool rikiavimasvardas(const studentas &a, const studentas &b);
+bool rikiavimaspavarde(const studentas &a, const studentas &b);
+void rikiavimas(vector<studentas> &A);
 
 int main()
 {
@@ -84,6 +88,7 @@ int main()
 
         if(duomskait == 'f'){
         skaitymasisfailo(A, budas);
+        rikiavimas(A);
         irasymasifaila(A, budas);}
         else if(duomskait == 'r')
         {
@@ -125,7 +130,7 @@ int main()
                 pazymiuived(new_studentas, budas, ivedbudas, duomskait);
                 A[i] = new_studentas;
             }
-
+            rikiavimas(A);
             isvedimas(A, budas);
         }
         }
@@ -188,7 +193,7 @@ void skaitymasisfailo(vector<studentas>& A, char budas)
     // out.close();
 }
 
-void irasymasifaila(vector<studentas>& A, char budas)
+void irasymasifaila(vector<studentas> &A, char budas)
 {
     ofstream out("kursiokai.txt");
     if (budas == 'v')
@@ -197,7 +202,7 @@ void irasymasifaila(vector<studentas>& A, char budas)
     }
     else if (budas=='m'){
          out << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
-    out << "-----------------------------------------------------" << endl;
+    out << "---------------------------------------------------------------------------------------------------" << endl;
     for (int i = 0; i < A.size(); i++)
     {
         out << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
@@ -205,20 +210,20 @@ void irasymasifaila(vector<studentas>& A, char budas)
     out.close();
 }
 
-void isvedimas(const vector<studentas>& A, char budas)
+void isvedimas(const vector<studentas> &A, char budas)
 {
     if (budas=='v'){
         cout << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;}
     else if (budas=='m'){
          cout << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
-    cout << "-----------------------------------------------------" << endl;
+    cout << "---------------------------------------------------------------------------------------------------" << endl;
     for (int i = 0; i < A.size(); i++)
     {
         cout << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
 }
 
-void pazymiuived(studentas& new_studentas, char budas, int ivedbudas, char duomskait)
+void pazymiuived(studentas &new_studentas, char budas, int ivedbudas, char duomskait)
 {
     int sum = 0;
     int pazymys;
@@ -303,4 +308,34 @@ void skaiciavimas(studentas &new_studentas, int sum, char budas)
     {
         new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
     }
+}
+
+bool rikiavimasgbalas(const studentas &a, const studentas &b)
+{
+    return a.gbalas > b.gbalas;
+}
+
+bool rikiavimasvardas(const studentas &a, const studentas &b)
+{
+    return a.vardas < b.vardas;
+}
+
+bool rikiavimaspavarde(const studentas &a, const studentas &b)
+{
+    return a.pavarde < b.pavarde;
+}
+
+void rikiavimas(vector<studentas> &A)
+{
+    char rikbudas;
+    cout << "Pasirinkite studentu rikiavimo buda (pagal galutinius balus (b), pagal vardus (v) ar pagal pavardes (p)): ";
+    while (!(cin >> rikbudas) || (rikbudas != 'b' && rikbudas != 'v' && rikbudas != 'p'))
+    {
+        cout << "Iveskite 'b', 'v' ar 'p': ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    if (rikbudas == 'b') {sort(A.begin(), A.end(), rikiavimasgbalas);}
+    else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
+    if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
 }

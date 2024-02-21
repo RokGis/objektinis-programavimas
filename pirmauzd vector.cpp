@@ -56,7 +56,7 @@ int main()
     srand(time(nullptr));
 
     int ivedbudas;
-    cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ranka, 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
+    cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ivesti duomenis (skaityti is failo), 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
     while (!(cin >> ivedbudas) || ivedbudas > 4 || ivedbudas < 1)
     {
         cout << "Iveskite skaiciu (1-4): ";
@@ -148,10 +148,8 @@ void skaitymasisfailo(vector<studentas>& A, char budas)
         return;
     }
 
-    //vector<string> splited;
     string eil;
     getline(in, eil);
-    // stringstream my_buffer;
 
     while(getline(in, eil)){
         studentas new_studentas;
@@ -175,22 +173,6 @@ void skaitymasisfailo(vector<studentas>& A, char budas)
         A.push_back(new_studentas); //studentas idedamas i vektoriu
     }
     in.close();
-
-    // ifstream in("duomenys.txt");
-    // my_buffer << in.rdbuf();
-    // in.close();
-    // while(my_buffer){
-    //     if(!my_buffer.eof()){
-    //     getline(my_buffer, eil);
-    //     splited.push_back(eil);}
-    //     else break;
-    // }
-    // string outputas="";
-    // for (const string &a : splited) (a.compare(*splited.rbegin()) !=0) ? outputas+=a+"\n":outputas+=a;
-    // splited.clear();
-    // ofstream out("rezultatai.txt");
-    // out << outputas;
-    // out.close();
 }
 
 void irasymasifaila(vector<studentas> &A, char budas)

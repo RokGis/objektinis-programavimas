@@ -19,9 +19,11 @@ struct studentas
     double gbalas;
 };
 
-void skaitymasisfailo(const vector<studentas> &A);
+void skaitymasisfailo(vector<studentas> &A, char budas);
 void isvedimas(const vector<studentas> &A, char budas);
-void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);
+void pazymiuived(studentas &new_studentas, char budas, int ivedbudas, char duomskait);
+void skaiciavimas(studentas &new_studentas, int sum, char budas);
+void irasymasifaila(vector<studentas> &A, char budas);
 
 int main()
 {
@@ -69,9 +71,22 @@ int main()
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
+        char duomskait;
+        cout << "Pasirinkite studentu duomenu skaitymo buda (ivedimas ranka (r) ar skaitymas is failo (f)): ";
+        while (!(cin >> duomskait) || (duomskait != 'r' && duomskait != 'f'))
+        {
+            cout << "Iveskite 'r' arba 'f': ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+
         vector<studentas> A; //sudaromas vektorius
 
-        skaitymasisfailo(A);
+        if(duomskait == 'f'){
+        skaitymasisfailo(A, budas);
+        irasymasifaila(A, budas);}
+        else if(duomskait == 'r')
+        {
 
         if (ivedbudas == 1 || ivedbudas == 2)
         {
@@ -83,7 +98,7 @@ int main()
                 if (new_studentas.vardas == "11"){
                     break;}
                 cin >> new_studentas.pavarde;
-                pazymiuived(new_studentas, budas, ivedbudas);
+                pazymiuived(new_studentas, budas, ivedbudas, duomskait);
                 A.push_back(new_studentas); // pridedamas elementas i gala 
             }
             isvedimas(A, budas);
@@ -107,57 +122,105 @@ int main()
                 studentas new_studentas;
                 new_studentas.vardas = vardai[rand() % vardai.size()];
                 new_studentas.pavarde = pavardes[rand() % pavardes.size()];
-                pazymiuived(new_studentas, budas, ivedbudas);
+                pazymiuived(new_studentas, budas, ivedbudas, duomskait);
                 A[i] = new_studentas;
             }
 
             isvedimas(A, budas);
+        }
         }
     }
     else {return 0;}
     return 0;
 }
 
-void skaitymasisfailo(const vector<studentas>& A)
+void skaitymasisfailo(vector<studentas>& A, char budas)
 {
-    vector<string> splited;
-    string eil;
-    stringstream my_buffer;
-
+    int sum = 0;
     ifstream in("duomenys.txt");
-    my_buffer << in.rdbuf();
-    in.close();
-    while(my_buffer){
-        if(!my_buffer.eof()){
-        getline(my_buffer, eil);
-        splited.push_back(eil);}
-        else break;
+    if (!in.is_open()) {
+        cout << "Nepavyko atidaryti failo." << endl;
+        return;
     }
-    string outputas="";
-    for (const string &a : splited) (a.compare(*splited.rbegin()) !=0) ? outputas+=a+"\n":outputas+=a;
-    splited.clear();
-    ofstream out("rezultatai.txt");
-    out << outputas;
+
+    //vector<string> splited;
+    string eil;
+    getline(in, eil);
+    // stringstream my_buffer;
+
+    while(getline(in, eil)){
+        studentas new_studentas;
+
+        new_studentas.vardas = eil.substr(0, 25);
+        new_studentas.pavarde = eil.substr(25, 25);
+        string pazymiai = eil.substr(50); //studento pazymiai saugomi kaip string tipo duomenys
+        stringstream my_buffer(pazymiai);
+        sum = 0;
+        int pazymys;
+        while (my_buffer >> pazymys)
+        {
+            new_studentas.ndrez.push_back(pazymys); //prisikiriamas elementas
+            sum += pazymys;
+        }
+        new_studentas.erez = new_studentas.ndrez.back(); //paskutinis elementas priskiriamas kaip egzamino rezultatas
+        new_studentas.ndrez.pop_back(); //paskutinis elementas istrinamas is namu darbu pazymiu vektoriaus
+
+        skaiciavimas(new_studentas, sum, budas);
+
+        A.push_back(new_studentas); //studentas idedamas i vektoriu
+    }
+    in.close();
+
+    // ifstream in("duomenys.txt");
+    // my_buffer << in.rdbuf();
+    // in.close();
+    // while(my_buffer){
+    //     if(!my_buffer.eof()){
+    //     getline(my_buffer, eil);
+    //     splited.push_back(eil);}
+    //     else break;
+    // }
+    // string outputas="";
+    // for (const string &a : splited) (a.compare(*splited.rbegin()) !=0) ? outputas+=a+"\n":outputas+=a;
+    // splited.clear();
+    // ofstream out("rezultatai.txt");
+    // out << outputas;
+    // out.close();
+}
+
+void irasymasifaila(vector<studentas>& A, char budas)
+{
+    ofstream out("kursiokai.txt");
+    if (budas == 'v')
+    {
+        out << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;
+    }
+    else if (budas=='m'){
+         out << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
+    out << "-----------------------------------------------------" << endl;
+    for (int i = 0; i < A.size(); i++)
+    {
+        out << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+    }
     out.close();
 }
 
 void isvedimas(const vector<studentas>& A, char budas)
 {
     if (budas=='v'){
-        cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << endl;}
+        cout << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;}
     else if (budas=='m'){
-         cout << setw(20) << left << "Vardas" << setw(20) << left << "Pavarde" << setw(20) << left << "Galutinis (Med.)" << endl;}
+         cout << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     cout << "-----------------------------------------------------" << endl;
     for (int i = 0; i < A.size(); i++)
     {
-        cout << setw(20) << left << A[i].vardas << setw(20) << left << A[i].pavarde << setw(20) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+        cout << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
 }
 
-void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)
+void pazymiuived(studentas& new_studentas, char budas, int ivedbudas, char duomskait)
 {
     int sum = 0;
-    double vid, mediana;
     int pazymys;
     if (ivedbudas == 1){
         cout << "Iveskite studento namu darbu rezultata arba „11“, jeigu norite uzbaigti rezultatu vedima: " << endl;}
@@ -195,7 +258,27 @@ void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)
         new_studentas.ndrez.push_back(pazymys); // pridedamas elementas i gala
         sum += pazymys;
     }
+    if (ivedbudas == 1 && duomskait == 'r')
+    {
+        cout << "Iveskite studento egzamino rezultata nuo 0 iki 10: ";
+        while (!(cin >> new_studentas.erez) || new_studentas.erez < 0 || new_studentas.erez > 10)
+        {
+            cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
 
+    if (ivedbudas == 2 || ivedbudas == 3)
+    {
+        new_studentas.erez = rand() % 11;
+    }
+    skaiciavimas(new_studentas, sum, budas);
+}
+
+void skaiciavimas(studentas &new_studentas, int sum, char budas)
+{
+    double vid, mediana;
     if (new_studentas.ndrez.size() == 0)
     {
         vid = 0;
@@ -210,20 +293,6 @@ void pazymiuived(studentas& new_studentas, char budas, int ivedbudas)
             mediana = (new_studentas.ndrez[new_studentas.ndrez.size() / 2 - 1] + new_studentas.ndrez[new_studentas.ndrez.size() / 2]) / 2.0;}
         else {
                 mediana = new_studentas.ndrez[new_studentas.ndrez.size() / 2];}
-    }
-    if (ivedbudas == 1)
-    {
-        cout << "Iveskite studento egzamino rezultata nuo 0 iki 10: ";
-        while (!(cin >> new_studentas.erez) || new_studentas.erez < 0 || new_studentas.erez > 10)
-        {
-            cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-    }
-    if (ivedbudas == 2 || ivedbudas == 3)
-    {
-        new_studentas.erez = rand() % 11;
     }
 
     if (budas == 'v')

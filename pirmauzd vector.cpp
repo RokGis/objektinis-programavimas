@@ -152,14 +152,13 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 
     while(getline(in, eil)){
         studentas new_studentas;
-
+        sum = 0;
         new_studentas.vardas = eil.substr(0, 25);
         new_studentas.pavarde = eil.substr(25, 25);
         if (ivedbudas == 1)
         {
             string pazymiai = eil.substr(50); // studento pazymiai saugomi kaip string tipo duomenys
             stringstream my_buffer(pazymiai);
-            sum = 0;
             int pazymys;
             while (my_buffer >> pazymys)
             {
@@ -168,7 +167,7 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
             }
             new_studentas.erez = new_studentas.ndrez.back(); // paskutinis elementas priskiriamas kaip egzamino rezultatas
             new_studentas.ndrez.pop_back();                  // paskutinis elementas istrinamas is namu darbu pazymiu vektoriaus
-
+            sum -= new_studentas.erez; //atimame egzamino reiksme, nes ji buvo prideta prie sumos
             skaiciavimas(new_studentas, sum, budas);
         }
         if (ivedbudas == 2)
@@ -315,6 +314,7 @@ void skaiciavimas(studentas &new_studentas, int sum, char budas)
     {
         new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
     }
+    sum = 0;
 }
 
 bool rikiavimasgbalas(const studentas &a, const studentas &b)

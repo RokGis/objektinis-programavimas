@@ -8,7 +8,10 @@
 #include <string>
 #include <fstream>
 #include <sstream> 
+#include <chrono>
+
 using namespace std;
+using namespace std::chrono;
 
 struct studentas
 {
@@ -148,6 +151,7 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
     }
 
     string eil;
+    auto start = high_resolution_clock::now();
     getline(in, eil);
 
     while(getline(in, eil)){
@@ -178,10 +182,15 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
         A.push_back(new_studentas); //studentas idedamas i vektoriu
     }
     in.close();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(stop - start);
+
+    cout << "Reading from file took: " << duration.count() << " milliseconds" << endl;
 }
 
 void irasymasifaila(vector<studentas> &A, char budas)
 {
+    auto start = high_resolution_clock::now(); 
     ofstream out("kursiokai.txt");
     if (budas == 'v')
     {
@@ -195,6 +204,9 @@ void irasymasifaila(vector<studentas> &A, char budas)
         out << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
     out.close();
+    auto stop = high_resolution_clock::now(); // Stop measuring time
+    auto duration = duration_cast<milliseconds>(stop - start); 
+    cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;
 }
 
 void isvedimas(vector<studentas> &A, char budas)

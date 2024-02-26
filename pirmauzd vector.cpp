@@ -144,7 +144,7 @@ int main()
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai1000000.txt");
+    ifstream in("studentai10000.txt");
     if (!in.is_open()) {
         cout << "Nepavyko atidaryti failo." << endl;
         return;

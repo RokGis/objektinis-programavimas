@@ -137,13 +137,7 @@ void pazymiuived(studentas &new_studentas, char budas, int ivedbudas)
     }
     if (ivedbudas == 1)
     {
-        cout << "Iveskite studento egzamino rezultata nuo 0 iki 10: ";
-        while (!(cin >> new_studentas.erez) || new_studentas.erez < 0 || new_studentas.erez > 10)
-        {
-            cout << "Netinkamas ivesties formatas. Iveskite pazymi nuo 0 iki 10: " << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
+        erezpatikra(new_studentas.erez);
     }
 
     if (ivedbudas == 2 || ivedbudas == 3)
@@ -201,14 +195,11 @@ bool rikiavimaspavarde(const studentas &a, const studentas &b)
 void rikiavimas(vector<studentas> &A)
 {
     char rikbudas;
-    cout << "Pasirinkite studentu rikiavimo buda (pagal galutinius balus (b), pagal vardus (v) ar pagal pavardes (p)): ";
-    while (!(cin >> rikbudas) || (rikbudas != 'b' && rikbudas != 'v' && rikbudas != 'p'))
+    rikbudpatikra(rikbudas);
+    if (rikbudas == 'b')
     {
-        cout << "Iveskite 'b', 'v' ar 'p': ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        sort(A.begin(), A.end(), rikiavimasgbalas);
     }
-    if (rikbudas == 'b') {sort(A.begin(), A.end(), rikiavimasgbalas);}
     else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
     if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
 }

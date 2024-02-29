@@ -8,3 +8,5 @@ char budaspatikra(char budas);
 char dskaitpatikra(char duomskait);
 int studskpatikra(int m);
 char isvedbudpatikra(char isvedbud);
+int erezpatikra(int erez);
+char rikbudpatikra(char rikbudas);

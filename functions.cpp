@@ -72,7 +72,7 @@ void irasymasifaila(vector<studentas> &A, char budas)
 void isvedimas(vector<studentas> &A, char budas)
 {
     char isvedbud;
-    isvedbud = isvedbudpatikra(isvedbud);
+    isvedbud = isvedbudpatikra();
     if (isvedbud == 'e')
     {
         if (budas == 'v')
@@ -137,7 +137,7 @@ void pazymiuived(studentas &new_studentas, char budas, int ivedbudas)
     }
     if (ivedbudas == 1)
     {
-        new_studentas.erez = erezpatikra(new_studentas.erez);
+        new_studentas.erez = erezpatikra();
     }
 
     if (ivedbudas == 2 || ivedbudas == 3)
@@ -195,7 +195,7 @@ bool rikiavimaspavarde(const studentas &a, const studentas &b)
 void rikiavimas(vector<studentas> &A)
 {
     char rikbudas;
-    rikbudas = rikbudpatikra(rikbudas);
+    rikbudas = rikbudpatikra();
     if (rikbudas == 'b')
     {
         sort(A.begin(), A.end(), rikiavimasgbalas);

@@ -10,16 +10,16 @@ int main()
     srand(time(nullptr));
 
     int ivedbudas;
-    ivedbudas = ivedbudpatikra(ivedbudas);
+    ivedbudas = ivedbudpatikra();
     cout << ivedbudas;
 
     if (ivedbudas != 4)
     {
         char budas;
-        budas = budaspatikra(budas);
+        budas = budaspatikra();
         char duomskait;
         if (ivedbudas == 1 || ivedbudas == 2){
-            duomskait = dskaitpatikra(duomskait);
+            duomskait = dskaitpatikra();
         }
 
         vector<studentas> A; //sudaromas vektorius
@@ -50,7 +50,7 @@ int main()
         if (ivedbudas == 3)
         {
             int m;
-            m = studskpatikra(m);
+            m = studskpatikra();
 
             A.resize(m); // nustatyti vektoriaus dydi
 

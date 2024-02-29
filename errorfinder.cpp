@@ -1,7 +1,8 @@
 #include "errorfinder.h"
 
-int ivedbudpatikra(int ivedbudas)
+int ivedbudpatikra()
 {
+    int ivedbudas;
     cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ivesti duomenis (skaityti is failo), 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
     while(true)
     {
@@ -21,8 +22,9 @@ int ivedbudpatikra(int ivedbudas)
     }
 }
 
-char budaspatikra(char budas)
+char budaspatikra()
 {
+    char budas;
     cout << "Pasirinkite galutinio balo apskaiciavimo buda (vidurkis (v) ar mediana (m)): ";
     while(true)
     {
@@ -42,8 +44,9 @@ char budaspatikra(char budas)
     }
 }
 
-char dskaitpatikra(char duomskait)
+char dskaitpatikra()
 {
+    char duomskait;
     cout << "Pasirinkite studentu duomenu skaitymo buda (ivedimas ranka (r) ar skaitymas is failo (f)): ";
     while(true)
     {
@@ -63,8 +66,9 @@ char dskaitpatikra(char duomskait)
     }
 }
 
-int studskpatikra(int m)
+int studskpatikra()
 {
+    int m;
     cout << "Iveskite studentu skaiciu: ";
     while(true)
     {
@@ -84,8 +88,9 @@ int studskpatikra(int m)
     }
 }
 
-char isvedbudpatikra(char isvedbud)
+char isvedbudpatikra()
 {
+    char isvedbud;
     cout << "Pasirinkite studentu duomenu isvedimo buda (ekrane (e) ar irasymas i faila (f)): ";
     while(true)
     {
@@ -105,8 +110,9 @@ char isvedbudpatikra(char isvedbud)
     }
 }
 
-int erezpatikra(int erez)
+int erezpatikra()
 {
+    int erez;
     cout << "Iveskite studento egzamino rezultata nuo 0 iki 10: ";
     while(true)
     {
@@ -127,8 +133,9 @@ int erezpatikra(int erez)
     }
 }
 
-char rikbudpatikra(char rikbudas)
+char rikbudpatikra()
 {
+    char rikbudas;
     cout << "Pasirinkite studentu rikiavimo buda (pagal galutinius balus (b), pagal vardus (v) ar pagal pavardes (p)): ";
     while(true)
     {

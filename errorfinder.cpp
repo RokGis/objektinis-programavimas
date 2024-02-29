@@ -104,3 +104,46 @@ char isvedbudpatikra(char isvedbud)
         }
     }
 }
+
+int erezpatikra(int erez)
+{
+    cout << "Iveskite studento egzamino rezultata nuo 0 iki 10: ";
+    while(true)
+    {
+        try{
+        if (!(cin >> erez) || erez < 0 || erez > 10)
+        {
+            throw "Įvestas (ne)skaičius ne iš intervalo (0-10). Įveskite dar kartą: ";
+        }
+        return erez;
+        break;
+        }
+        catch (char const *error)
+        {
+            cerr << error << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
+
+char rikbudpatikra(char rikbudas)
+{
+    cout << "Pasirinkite studentu rikiavimo buda (pagal galutinius balus (b), pagal vardus (v) ar pagal pavardes (p)): ";
+    while(true)
+    {
+        try{
+        if(!(cin >> rikbudas) || (rikbudas != 'b' && rikbudas != 'v' && rikbudas != 'p'))
+        {
+            throw "Įvestas netinkamas simbolis. Įveskite dar kartą 'b', 'v' arba 'p': ";
+        }
+        return rikbudas;
+        break;
+        } catch (char const *error)
+        {
+            cerr << error << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}

@@ -10,3 +10,4 @@ int studskpatikra();
 char isvedbudpatikra();
 int erezpatikra();
 char rikbudpatikra();
+int pazymiopatikra();

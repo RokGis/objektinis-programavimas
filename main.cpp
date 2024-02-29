@@ -10,13 +10,28 @@ int main()
 
     int ivedbudas;
     cout << "Pasirinkite studentu duomenu ivedimo buda (1 - ivesti duomenis (skaityti is failo), 2 - generuoti pazymius, 3 - generuoti pazymius ir studentus, 4 - baigti darba): ";
-    while (!(cin >> ivedbudas) || ivedbudas > 4 || ivedbudas < 1)
+    // while (!(cin >> ivedbudas) || ivedbudas > 4 || ivedbudas < 1)
+    // {
+    //     cout << "Iveskite skaiciu (1-4): ";
+    //     cin.clear();
+    //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // }
+    while(true)
     {
-        cout << "Iveskite skaiciu (1-4): ";
+    try{
+        if(!(cin >> ivedbudas) || ivedbudas > 4 || ivedbudas < 1)
+        {
+            throw "Įvestas (ne)skaičius ne iš intervalo (1-4). Įveskite dar kartą: ";
+        }
+        break;
+    } catch (char const *error)
+    {
+        cerr << error << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
-    
+    }
+
     if (ivedbudas != 4)
     {
         char budas;

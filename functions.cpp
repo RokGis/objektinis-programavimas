@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "errorfinder.h"
 
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 {
@@ -71,13 +72,7 @@ void irasymasifaila(vector<studentas> &A, char budas)
 void isvedimas(vector<studentas> &A, char budas)
 {
     char isvedbud;
-    cout << "Pasirinkite studentu duomenu isvedimo buda (ekrane (e) ar irasymas i faila (f)): ";
-    while (!(cin >> isvedbud) || (isvedbud != 'e' && isvedbud != 'f'))
-    {
-        cout << "Iveskite 'e' arba 'f': ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
+    isvedbudpatikra(isvedbud);
     if (isvedbud == 'e')
     {
         if (budas == 'v')

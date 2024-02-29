@@ -5,10 +5,11 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
     ifstream in("studentai10000.txt");
-    if (!in.is_open()) {
-        cout << "Nepavyko atidaryti failo." << endl;
-        return;
-    }
+    
+    try {
+        if (!in.is_open()) {
+            throw runtime_error("Nepavyko atidaryti failo.");
+        }
 
     string eil;
     auto start = high_resolution_clock::now();
@@ -46,6 +47,9 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
     auto duration = duration_cast<milliseconds>(stop - start);
 
     cout << "Reading from file took: " << duration.count() << " milliseconds" << endl;
+        } catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+    }
 }
 
 void irasymasifaila(vector<studentas> &A, char budas)

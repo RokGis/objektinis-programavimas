@@ -106,24 +106,11 @@ void pazymiuived(studentas &new_studentas, char budas, int ivedbudas)
     {
         if (ivedbudas == 1)
         {
-            cout << "Iveskite pazymi nuo 0 iki 10: ";
-            if (!(cin >> pazymys))
-            {
-                cout << "Netinkamas ivesties formatas. ";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                continue;
-            }
+            pazymys = pazymiopatikra();
             if (pazymys == 11)
             {
                 break;
-            }
-            if (pazymys < 0 || pazymys > 10)
-            {
-                cout << "Netinkamas ivesties formatas. ";
-                continue;
-            }
-                
+            }                
         }
 
         if (ivedbudas == 2 || ivedbudas == 3)

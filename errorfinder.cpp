@@ -154,3 +154,26 @@ char rikbudpatikra()
         }
     }
 }
+
+int pazymiopatikra()
+{
+    int pazymys;
+    cout << "Iveskite pazymi nuo 0 iki 10: ";
+    while(true)
+    {
+    try{           
+        if (!(cin >> pazymys) || pazymys < 0 || pazymys > 11)
+        {
+            throw "Įvestas (ne)skaičius ne iš intervalo (1-4). Įveskite dar kartą: ";
+        }
+        return pazymys;
+        break;
+    }
+    catch (char const *error)
+    {
+        cerr << error << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}

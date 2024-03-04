@@ -1,5 +1,6 @@
 #include "functions.h"
 #include "errorfinder.h"
+#include"filegenerator.h"
 
 int main()
 {
@@ -11,7 +12,7 @@ int main()
 
     int ivedbudas;
     ivedbudas = ivedbudpatikra();
-    cout << ivedbudas;
+    failugeneravimas();
 
     if (ivedbudas != 4)
     {

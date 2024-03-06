@@ -22,6 +22,20 @@ struct studentas
     double gbalas;
 };
 
+struct kietiakas
+{
+    string vardas;
+    string pavarde;
+    double gbalas;
+};
+
+struct vargsiukas
+{
+    string vardas;
+    string pavarde;
+    double gbalas;
+};
+
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas);
 void isvedimas(vector<studentas> &A, char budas);
 void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);
@@ -31,3 +45,6 @@ bool rikiavimasgbalas(const studentas &a, const studentas &b);
 bool rikiavimasvardas(const studentas &a, const studentas &b);
 bool rikiavimaspavarde(const studentas &a, const studentas &b);
 void rikiavimas(vector<studentas> &A);
+void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V);
+void irasymasifailaK(vector<kietiakas> &K, char budas);
+void irasymasifailaV(vector<vargsiukas> &V, char budas);

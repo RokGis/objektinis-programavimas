@@ -1,30 +1,34 @@
 #include "filegenerator.h"
+#include "errorfinder.h"
 
 int failugeneravimas ()
 {
-    ofstream out("studentai1000.txt");
     int n = 0;
     int m = 0;
     cout << "Iveskite studentu skaiciu: ";
-    cin >> n;
+    n = studskpatikra();
     cout << "Iveskite namu darbu pazymiu skaiciu: ";
-    cin >> m;
+    m = studskpatikra();
+    ofstream out("studentai" + to_string(n) + ".txt");
+    ostringstream buffer;
 
-    out << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde";
+    buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde";
     for (int i = 0; i < m; i++)
     {
-        out << setw(8) << right << "ND" + to_string(i + 1);
+        buffer << setw(8) << right << "ND" + to_string(i + 1);
     }
-    out << setw(8) << right << "Egz." << endl;
+    buffer << setw(8) << right << "Egz." << endl;
 
     for (int i = 0; i < n; i++)
     {
-        out << setw(25) << left << "Vardas" + to_string(i + 1) << setw(25) << left << "Pavarde" + to_string(i + 1);
+        buffer << setw(25) << left << "Vardas" + to_string(i + 1) << setw(25) << left << "Pavarde" + to_string(i + 1);
         for (int j = 0; j < m + 1; j++)
         {
-            out << right << setw(8) << rand() % 11;
+            buffer << right << setw(8) << rand() % 11;
         }
-        out << endl;
+        buffer << endl;
     }
+    out << buffer.str(); 
+    out.close();
     return 0;
 }

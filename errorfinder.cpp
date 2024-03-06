@@ -69,13 +69,12 @@ char dskaitpatikra()
 int studskpatikra()
 {
     int m;
-    cout << "Iveskite studentu skaiciu: ";
     while(true)
     {
         try{
         if(!(cin >> m) || m <= 0)
         {
-            throw "Įvestas netinkamas studentų skaičius. Įveskite dar kartą natūralųjį skaičių: ";
+            throw "Įvestas netinkamas skaičius. Įveskite dar kartą natūralųjį skaičių: ";
         }
         return m;
         break;

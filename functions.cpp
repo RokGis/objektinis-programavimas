@@ -56,17 +56,19 @@ void irasymasifaila(vector<studentas> &A, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream out("kursiokai.txt");
+    ostringstream buffer;
     if (budas == 'v')
     {
-        out << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;
+        buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;
     }
     else if (budas=='m'){
-         out << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
-    out << "---------------------------------------------------------------------------------------------------" << endl;
+         buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
+    buffer << "---------------------------------------------------------------------------------------------------" << endl;
     for (int i = 0; i < A.size(); i++)
     {
-        out << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+        buffer << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
+    out << buffer.str(); 
     out.close();
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
@@ -193,4 +195,73 @@ void rikiavimas(vector<studentas> &A)
     }
     else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
     if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
+}
+
+void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
+{
+    for (int i = 0; i < A.size(); i++)
+    {
+        if (A[i].gbalas >= 5.0)
+        {
+            kietiakas k;
+            k.vardas = A[i].vardas;
+            k.pavarde = A[i].pavarde;
+            k.gbalas = A[i].gbalas;
+            K.push_back(k);
+        }
+        if (A[i].gbalas < 5.0)
+        {
+            vargsiukas v;
+            v.vardas = A[i].vardas;
+            v.pavarde = A[i].pavarde;
+            v.gbalas = A[i].gbalas;
+            V.push_back(v);
+        }
+    }
+}
+
+void irasymasifailaK(vector<kietiakas> &K, char budas)
+{
+    auto start = high_resolution_clock::now(); 
+    ofstream out("kietiakai.txt");
+    ostringstream buffer;
+    if (budas == 'v')
+    {
+        buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;
+    }
+    else if (budas=='m'){
+         buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
+    buffer << "---------------------------------------------------------------------------------------------------" << endl;
+    for (int i = 0; i < K.size(); i++)
+    {
+        buffer << setw(25) << left << K[i].vardas << setw(25) << left << K[i].pavarde << setw(25) << left << fixed << setprecision(2) << K[i].gbalas << endl;
+    }
+    out << buffer.str();
+    out.close();
+    auto stop = high_resolution_clock::now(); // Stop measuring time
+    auto duration = duration_cast<milliseconds>(stop - start); 
+    cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;
+}
+
+void irasymasifailaV(vector<vargsiukas> &V, char budas)
+{
+    auto start = high_resolution_clock::now(); 
+    ofstream out("vargsiukai.txt");
+    ostringstream buffer;
+    if (budas == 'v')
+    {
+        buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Vid.)" << endl;
+    }
+    else if (budas=='m'){
+         buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
+    buffer << "---------------------------------------------------------------------------------------------------" << endl;
+    for (int i = 0; i < V.size(); i++)
+    {
+        buffer << setw(25) << left << V[i].vardas << setw(25) << left << V[i].pavarde << setw(25) << left << fixed << setprecision(2) << V[i].gbalas << endl;
+    }
+    out << buffer.str();
+    out.close();
+    auto stop = high_resolution_clock::now(); // Stop measuring time
+    auto duration = duration_cast<milliseconds>(stop - start); 
+    cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;
 }

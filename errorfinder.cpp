@@ -176,3 +176,25 @@ int pazymiopatikra()
         }
     }
 }
+
+char skirstymopatikra()
+{
+    char ski;
+    cout << "Ar skirstyti studentus į kietiakus ir vargselius? Pasirinkite: taip (t) arba ne (n): ";
+    while(true)
+    {
+        try{
+        if(!(cin >> ski) || (ski != 't' && ski != 'n'))
+        {
+           throw "Įvestas netinkamas simbolis. Įveskite dar kartą 't' arba 'n': ";
+        }
+        return ski;
+        break;
+        }catch (char const *error)
+        {
+            cerr << error << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}

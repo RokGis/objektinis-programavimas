@@ -24,12 +24,18 @@ int main()
         }
 
         vector<studentas> A; //sudaromas vektorius
+        vector<kietiakas> K; 
+        vector<vargsiukas> V; 
 
         if ((ivedbudas == 1 || ivedbudas == 2) && duomskait == 'f')
         {
             skaitymasisfailo(A, budas, ivedbudas);
+            skirstymas(A, K, V);
             rikiavimas(A);
-            isvedimas(A, budas);}
+            isvedimas(A, budas);
+            irasymasifailaK(K, budas);
+            irasymasifailaV(V, budas);
+        }
 
         else if ((ivedbudas == 1 || ivedbudas == 2) && duomskait == 'r')
         {
@@ -51,6 +57,7 @@ int main()
         if (ivedbudas == 3)
         {
             int m;
+            cout << "Iveskite studentu skaiciu: ";
             m = studskpatikra();
 
             A.resize(m); // nustatyti vektoriaus dydi

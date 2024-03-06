@@ -22,6 +22,7 @@ int main()
         if (ivedbudas == 1 || ivedbudas == 2){
             duomskait = dskaitpatikra();
         }
+        char ski;
 
         vector<studentas> A; //sudaromas vektorius
         vector<kietiakas> K; 
@@ -30,11 +31,18 @@ int main()
         if ((ivedbudas == 1 || ivedbudas == 2) && duomskait == 'f')
         {
             skaitymasisfailo(A, budas, ivedbudas);
-            skirstymas(A, K, V);
             rikiavimas(A);
-            isvedimas(A, budas);
-            irasymasifailaK(K, budas);
-            irasymasifailaV(V, budas);
+            ski = skirstymopatikra();
+            if (ski == 't')
+            {
+                skirstymas(A, K, V);
+                irasymasifailaK(K, V, budas);
+            }
+            else if (ski == 'n')
+            {
+                isvedimas(A, budas);
+            }
+            
         }
 
         else if ((ivedbudas == 1 || ivedbudas == 2) && duomskait == 'r')
@@ -51,7 +59,16 @@ int main()
                 A.push_back(new_studentas); // pridedamas elementas i gala 
             }
             rikiavimas(A);
-            isvedimas(A, budas);
+            ski = skirstymopatikra();
+            if (ski == 't')
+            {
+                skirstymas(A, K, V);
+                irasymasifailaK(K, V, budas);
+            }
+            else if (ski == 'n')
+            {
+                isvedimas(A, budas);
+            }
         }
         
         if (ivedbudas == 3)
@@ -71,7 +88,16 @@ int main()
                 A[i] = new_studentas;
             }
             rikiavimas(A);
-            isvedimas(A, budas);
+            ski = skirstymopatikra();
+            if (ski == 't')
+            {
+                skirstymas(A, K, V);
+                irasymasifailaK(K, V, budas);
+            }
+            else if (ski == 'n')
+            {
+                isvedimas(A, budas);
+            }
         }
     }
     else {return 0;}

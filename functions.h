@@ -46,5 +46,4 @@ bool rikiavimasvardas(const studentas &a, const studentas &b);
 bool rikiavimaspavarde(const studentas &a, const studentas &b);
 void rikiavimas(vector<studentas> &A);
 void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V);
-void irasymasifailaK(vector<kietiakas> &K, char budas);
-void irasymasifailaV(vector<vargsiukas> &V, char budas);
+void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas);

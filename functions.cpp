@@ -4,7 +4,7 @@
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000.txt");
+    ifstream in("studentai10000000.txt");
     
     try {
         if (!in.is_open()) {

@@ -198,3 +198,25 @@ char skirstymopatikra()
         }
     }
 }
+
+char fgeneravimopatikra()
+{
+    char fgen;
+    cout << "Ar generuoti studentų failą? Pasirinkite: taip (t) arba ne (n): ";
+    while(true)
+    {
+        try{
+        if(!(cin >> fgen) || (fgen != 't' && fgen != 'n'))
+        {
+           throw "Įvestas netinkamas simbolis. Įveskite dar kartą 't' arba 'n': ";
+        }
+        return fgen;
+        break;
+        }catch (char const *error)
+        {
+            cerr << error << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}

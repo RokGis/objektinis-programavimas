@@ -10,10 +10,10 @@ int main()
 
     srand(time(nullptr));
 
+    failugeneravimas();
     int ivedbudas;
     ivedbudas = ivedbudpatikra();
-    failugeneravimas();
-
+    
     if (ivedbudas != 4)
     {
         char budas;

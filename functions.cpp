@@ -6,7 +6,7 @@ int tlaikas = 0;
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai1000.txt");
+    ifstream in("studentai10000000.txt");
     
     try {
         if (!in.is_open()) {
@@ -198,15 +198,15 @@ bool rikiavimaspavarde(const studentas &a, const studentas &b)
 
 void rikiavimas(vector<studentas> &A)
 {
-    auto start = high_resolution_clock::now(); 
     char rikbudas;
     rikbudas = rikbudpatikra();
+    auto start = high_resolution_clock::now(); 
     if (rikbudas == 'b')
     {
         sort(A.begin(), A.end(), rikiavimasgbalas);
     }
     else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
-    if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
+    else if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
     tlaikas += duration.count();

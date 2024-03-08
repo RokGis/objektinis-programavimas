@@ -1,10 +1,12 @@
 #include "functions.h"
 #include "errorfinder.h"
 
+int tlaikas = 0;
+
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000000.txt");
+    ifstream in("studentai1000.txt");
     
     try {
         if (!in.is_open()) {
@@ -27,14 +29,6 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
             int pazymys;
             while (my_buffer >> pazymys)
             {
-                if (pazymys < 0 || pazymys > 10)
-                {
-                    throw runtime_error("Netinkamas pažymys. Pažymys turi būti natūralus skaičius tarp 0 ir 10.");
-                }
-                else if (my_buffer.fail() || (my_buffer.peek() != EOF && !isdigit(my_buffer.peek())))
-                {
-                    throw runtime_error("Netinkamas pažymys. Pažymys turi būti natūralusis skaičius tarp 0 ir 10.");
-                }
                 new_studentas.ndrez.push_back(pazymys); // prisikiriamas elSementas
                 sum += pazymys;
             }
@@ -55,7 +49,10 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
     auto duration = duration_cast<milliseconds>(stop - start);
 
     cout << "Reading from file took: " << duration.count() << " milliseconds" << endl;
-        } catch (const runtime_error& e) {
+    tlaikas += duration.count();
+    }
+    catch (const runtime_error &e)
+    {
         cerr << e.what() << endl;
         exit(EXIT_FAILURE);
     }
@@ -82,6 +79,7 @@ void irasymasifaila(vector<studentas> &A, char budas)
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
     cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;
+    tlaikas += duration.count();
 }
 
 void isvedimas(vector<studentas> &A, char budas)
@@ -151,6 +149,7 @@ void pazymiuived(studentas &new_studentas, char budas, int ivedbudas)
 
 void skaiciavimas(studentas &new_studentas, int sum, char budas)
 {
+    auto start = high_resolution_clock::now(); 
     double vid, mediana;
     if (new_studentas.ndrez.size() == 0)
     {
@@ -177,6 +176,9 @@ void skaiciavimas(studentas &new_studentas, int sum, char budas)
         new_studentas.gbalas = 0.4 * mediana + 0.6 * new_studentas.erez;
     }
     sum = 0;
+    auto stop = high_resolution_clock::now(); // Stop measuring time
+    auto duration = duration_cast<milliseconds>(stop - start); 
+    tlaikas += duration.count();
 }
 
 bool rikiavimasgbalas(const studentas &a, const studentas &b)
@@ -196,6 +198,7 @@ bool rikiavimaspavarde(const studentas &a, const studentas &b)
 
 void rikiavimas(vector<studentas> &A)
 {
+    auto start = high_resolution_clock::now(); 
     char rikbudas;
     rikbudas = rikbudpatikra();
     if (rikbudas == 'b')
@@ -204,6 +207,9 @@ void rikiavimas(vector<studentas> &A)
     }
     else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
     if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
+    auto stop = high_resolution_clock::now(); // Stop measuring time
+    auto duration = duration_cast<milliseconds>(stop - start); 
+    tlaikas += duration.count();
 }
 
 void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
@@ -232,6 +238,7 @@ void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &
     auto duration = duration_cast<milliseconds>(stop - start);
 
     cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
+    tlaikas += duration.count();
 }
 
 void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
@@ -270,4 +277,6 @@ void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
     cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;
+    tlaikas += duration.count();
+    cout << "Programos vykdymo laikas: " << tlaikas << " milliseconds" << endl;
 }

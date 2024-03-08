@@ -36,6 +36,8 @@ struct vargsiukas
     double gbalas;
 };
 
+extern int tlaikas;
+
 void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas);
 void isvedimas(vector<studentas> &A, char budas);
 void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);

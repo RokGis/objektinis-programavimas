@@ -7,6 +7,7 @@ int failugeneravimas ()
     fgen = fgeneravimopatikra();
     if (fgen == 't')
     {
+        auto start = high_resolution_clock::now();
         int n = 0;
         int m = 0;
         cout << "Iveskite studentu skaiciu: ";
@@ -34,6 +35,10 @@ int failugeneravimas ()
         }
         out << buffer.str();
         out.close();
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<milliseconds>(stop - start);
+
+        cout << "Failų generavimas užtruko: " << duration.count() << " milliseconds" << endl;
         return 0;
     }
     else

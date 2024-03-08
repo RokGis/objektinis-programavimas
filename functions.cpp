@@ -27,7 +27,15 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
             int pazymys;
             while (my_buffer >> pazymys)
             {
-                new_studentas.ndrez.push_back(pazymys); // prisikiriamas elementas
+                if (pazymys < 0 || pazymys > 10)
+                {
+                    throw runtime_error("Netinkamas pažymys. Pažymys turi būti natūralus skaičius tarp 0 ir 10.");
+                }
+                else if (my_buffer.fail() || (my_buffer.peek() != EOF && !isdigit(my_buffer.peek())))
+                {
+                    throw runtime_error("Netinkamas pažymys. Pažymys turi būti natūralusis skaičius tarp 0 ir 10.");
+                }
+                new_studentas.ndrez.push_back(pazymys); // prisikiriamas elSementas
                 sum += pazymys;
             }
             new_studentas.erez = new_studentas.ndrez.back(); // paskutinis elementas priskiriamas kaip egzamino rezultatas
@@ -49,6 +57,7 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
     cout << "Reading from file took: " << duration.count() << " milliseconds" << endl;
         } catch (const runtime_error& e) {
         cerr << e.what() << endl;
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -199,6 +208,7 @@ void rikiavimas(vector<studentas> &A)
 
 void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
 {
+    auto start = high_resolution_clock::now();
     for (int i = 0; i < A.size(); i++)
     {
         if (A[i].gbalas >= 5.0)
@@ -218,6 +228,10 @@ void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &
             V.push_back(v);
         }
     }
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(stop - start);
+
+    cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
 }
 
 void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)

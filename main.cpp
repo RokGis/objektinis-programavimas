@@ -4,9 +4,31 @@
 
 int main()
 {
-    vector<string> vardai = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas"};
+    // vector<std::string> vardai = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas"};
 
-    vector<string> pavardes = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis"};
+    // vector<std::string> pavardes = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis"};
+
+std::vector<std::string> vardai;
+    vardai.push_back("Jonas");
+    vardai.push_back("Vytautas");
+    vardai.push_back("Tomas");
+    vardai.push_back("Mindaugas");
+    vardai.push_back("Antanas");
+    vardai.push_back("Darius");
+    vardai.push_back("Rokas");
+    vardai.push_back("Matas");
+    vardai.push_back("Lukas");
+
+    std::vector<std::string> pavardes;
+    pavardes.push_back("Kazlauskas");
+    pavardes.push_back("Jankauskas");
+    pavardes.push_back("Petrauskas");
+    pavardes.push_back("Stankevicius");
+    pavardes.push_back("Vasiliauskas");
+    pavardes.push_back("Vaigauskas");
+    pavardes.push_back("Gilys");
+    pavardes.push_back("Gavenas");
+    pavardes.push_back("Gruodis");
 
     srand(time(nullptr));
 

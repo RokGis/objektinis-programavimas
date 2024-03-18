@@ -3,10 +3,10 @@
 
 int tlaikas = 0;
 
-void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
+void skaitymasisfailo(list<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000000.txt");
+    ifstream in("studentai10000.txt");
     
     try {
         if (!in.is_open()) {
@@ -42,7 +42,7 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
             pazymiuived(new_studentas, budas, ivedbudas);
         }
 
-        A.push_back(new_studentas); //studentas idedamas i vektoriu
+        A.push_front(new_studentas); //studentas idedamas i vektoriu
     }
     in.close();
     auto stop = high_resolution_clock::now();
@@ -58,7 +58,7 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
     }
 }
 
-void irasymasifaila(vector<studentas> &A, char budas)
+void irasymasifaila(list<studentas> &A, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream out("kursiokai.txt");
@@ -70,9 +70,9 @@ void irasymasifaila(vector<studentas> &A, char budas)
     else if (budas=='m'){
          buffer << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     buffer << "---------------------------------------------------------------------------------------------------" << endl;
-    for (int i = 0; i < A.size(); i++)
+    for (const auto& studentas : A)
     {
-        buffer << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+        buffer << setw(25) << left << studentas.vardas << setw(25) << left << studentas.pavarde << setw(25) << left << fixed << setprecision(2) << studentas.gbalas << endl;
     }
     out << buffer.str(); 
     out.close();
@@ -82,7 +82,7 @@ void irasymasifaila(vector<studentas> &A, char budas)
     tlaikas += duration.count();
 }
 
-void isvedimas(vector<studentas> &A, char budas)
+void isvedimas(list<studentas> &A, char budas)
 {
     char isvedbud;
     isvedbud = isvedbudpatikra();
@@ -97,9 +97,9 @@ void isvedimas(vector<studentas> &A, char budas)
             cout << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;
         }
         cout << "---------------------------------------------------------------------------------------------------" << endl;
-        for (int i = 0; i < A.size(); i++)
+        for (const auto& studentas : A)
         {
-            cout << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+            cout << setw(25) << left << studentas.vardas << setw(25) << left << studentas.pavarde << setw(25) << left << fixed << setprecision(2) << studentas.gbalas << endl;
         }
     }
     else if (isvedbud == 'f')
@@ -159,12 +159,13 @@ void skaiciavimas(studentas &new_studentas, int sum, char budas)
     else 
     {
         vid = sum / (new_studentas.ndrez.size() * 1.0);
+
+        new_studentas.ndrez.sort();
             
-        sort(new_studentas.ndrez.begin(), new_studentas.ndrez.end());
-        if (new_studentas.ndrez.size() % 2 == 0) {
-            mediana = (new_studentas.ndrez[new_studentas.ndrez.size() / 2 - 1] + new_studentas.ndrez[new_studentas.ndrez.size() / 2]) / 2.0;}
-        else {
-                mediana = new_studentas.ndrez[new_studentas.ndrez.size() / 2];}
+        auto it = new_studentas.ndrez.begin(); // Iterator pointing to the beginning of the list
+        advance(it, new_studentas.ndrez.size() / 2); // Move the iterator to the middle element
+        mediana = *it; // Assign the middle element as the median
+
     }
 
     if (budas == 'v')
@@ -196,41 +197,41 @@ bool rikiavimaspavarde(const studentas &a, const studentas &b)
     return a.pavarde < b.pavarde;
 }
 
-void rikiavimas(vector<studentas> &A)
+void rikiavimas(list<studentas> &A)
 {
     char rikbudas;
     rikbudas = rikbudpatikra();
     auto start = high_resolution_clock::now(); 
     if (rikbudas == 'b')
     {
-        sort(A.begin(), A.end(), rikiavimasgbalas);
+        A.sort(rikiavimasgbalas);
     }
-    else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
-    else if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
+    else if (rikbudas == 'v') {A.sort(rikiavimasvardas);}
+    else if (rikbudas == 'p') {A.sort(rikiavimaspavarde);}
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
     tlaikas += duration.count();
 }
 
-void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
+void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
 {
     auto start = high_resolution_clock::now();
-    for (int i = 0; i < A.size(); i++)
+    for (const auto& studentas : A)
     {
-        if (A[i].gbalas >= 5.0)
+        if (studentas.gbalas >= 5.0)
         {
             kietiakas k;
-            k.vardas = A[i].vardas;
-            k.pavarde = A[i].pavarde;
-            k.gbalas = A[i].gbalas;
+            k.vardas = studentas.vardas;
+            k.pavarde = studentas.pavarde;
+            k.gbalas = studentas.gbalas;
             K.push_back(k);
         }
-        if (A[i].gbalas < 5.0)
+        if (studentas.gbalas < 5.0)
         {
             vargsiukas v;
-            v.vardas = A[i].vardas;
-            v.pavarde = A[i].pavarde;
-            v.gbalas = A[i].gbalas;
+            v.vardas = studentas.vardas;
+            v.pavarde = studentas.pavarde;
+            v.gbalas = studentas.gbalas;
             V.push_back(v);
         }
     }
@@ -241,7 +242,7 @@ void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &
     tlaikas += duration.count();
 }
 
-void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
+void irasymasifailaK(list<kietiakas> &K, list<vargsiukas> &V, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream outK("kietiakai.txt");
@@ -253,9 +254,9 @@ void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
     else if (budas=='m'){
          bufferK << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     bufferK << "---------------------------------------------------------------------------------------------------" << endl;
-    for (int i = 0; i < K.size(); i++)
+    for (const auto& k : K)
     {
-        bufferK << setw(25) << left << K[i].vardas << setw(25) << left << K[i].pavarde << setw(25) << left << fixed << setprecision(2) << K[i].gbalas << endl;
+        bufferK << setw(25) << left << k.vardas << setw(25) << left << k.pavarde << setw(25) << left << fixed << setprecision(2) << k.gbalas << endl;
     }
     outK << bufferK.str();
     outK.close();
@@ -268,9 +269,9 @@ void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
     else if (budas=='m'){
          bufferV << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     bufferV << "---------------------------------------------------------------------------------------------------" << endl;
-    for (int i = 0; i < V.size(); i++)
+    for (const auto& v : V)
     {
-        bufferV << setw(25) << left << V[i].vardas << setw(25) << left << V[i].pavarde << setw(25) << left << fixed << setprecision(2) << V[i].gbalas << endl;
+        bufferV << setw(25) << left << v.vardas << setw(25) << left << v.pavarde << setw(25) << left << fixed << setprecision(2) << v.gbalas << endl;
     }
     outV << bufferV.str();
     outV.close();

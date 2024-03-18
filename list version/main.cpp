@@ -4,9 +4,9 @@
 
 int main()
 {
-    vector<std::string> vardai = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas"};
+    list<std::string> vardai = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas"};
 
-    vector<std::string> pavardes = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis"};
+    list<std::string> pavardes = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis"};
 
     srand(time(nullptr));
 
@@ -24,9 +24,9 @@ int main()
         }
         char ski;
 
-        vector<studentas> A; //sudaromas vektorius
-        vector<kietiakas> K; 
-        vector<vargsiukas> V; 
+        list<studentas> A; //sudaromas list
+        list<kietiakas> K; 
+        list<vargsiukas> V; 
 
         if ((ivedbudas == 1 || ivedbudas == 2) && duomskait == 'f')
         {
@@ -80,12 +80,17 @@ int main()
             A.resize(m); // nustatyti vektoriaus dydi
 
             for (int i = 0; i < m; i++)
-            {
+            {   
                 studentas new_studentas;
-                new_studentas.vardas = vardai[rand() % vardai.size()];
-                new_studentas.pavarde = pavardes[rand() % pavardes.size()];
+                // Generate random indices for names to avoid duplicates
+                int name_index = rand() % vardai.size();
+                int surname_index = rand() % pavardes.size();
+                // Assign random names
+                new_studentas.vardas = *std::next(vardai.begin(), name_index);
+                new_studentas.pavarde = *std::next(pavardes.begin(), surname_index);
+                // Generate random grades
                 pazymiuived(new_studentas, budas, ivedbudas);
-                A[i] = new_studentas;
+                A.push_back(new_studentas);
             }
             rikiavimas(A);
             ski = skirstymopatikra();

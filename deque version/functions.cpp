@@ -6,7 +6,7 @@ int tlaikas = 0;
 void skaitymasisfailo(deque<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000.txt");
+    ifstream in("studentai10000000.txt");
     
     try {
         if (!in.is_open()) {
@@ -209,6 +209,7 @@ void rikiavimas(deque<studentas> &A)
     else if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
+    cout << "Rūšiavimas (sort) truko: " << duration.count() << " miliseconds" << endl;
     tlaikas += duration.count();
 }
 

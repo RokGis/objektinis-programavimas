@@ -208,7 +208,8 @@ void rikiavimas(vector<studentas> &A)
     else if (rikbudas == 'v') {sort(A.begin(), A.end(), rikiavimasvardas);}
     else if (rikbudas == 'p') {sort(A.begin(), A.end(), rikiavimaspavarde);}
     auto stop = high_resolution_clock::now(); // Stop measuring time
-    auto duration = duration_cast<milliseconds>(stop - start); 
+    auto duration = duration_cast<milliseconds>(stop - start);
+    cout << "Rūšiavimas (sort) truko: " << duration.count() << " miliseconds" << endl;
     tlaikas += duration.count();
 }
 

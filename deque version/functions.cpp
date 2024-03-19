@@ -3,10 +3,10 @@
 
 int tlaikas = 0;
 
-void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
+void skaitymasisfailo(deque<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000000.txt");
+    ifstream in("studentai10000.txt");
     
     try {
         if (!in.is_open()) {
@@ -58,7 +58,7 @@ void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas)
     }
 }
 
-void irasymasifaila(vector<studentas> &A, char budas)
+void irasymasifaila(deque<studentas> &A, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream out("kursiokai.txt");
@@ -82,7 +82,7 @@ void irasymasifaila(vector<studentas> &A, char budas)
     tlaikas += duration.count();
 }
 
-void isvedimas(vector<studentas> &A, char budas)
+void isvedimas(deque<studentas> &A, char budas)
 {
     char isvedbud;
     isvedbud = isvedbudpatikra();
@@ -196,7 +196,7 @@ bool rikiavimaspavarde(const studentas &a, const studentas &b)
     return a.pavarde < b.pavarde;
 }
 
-void rikiavimas(vector<studentas> &A)
+void rikiavimas(deque<studentas> &A)
 {
     char rikbudas;
     rikbudas = rikbudpatikra();
@@ -212,7 +212,7 @@ void rikiavimas(vector<studentas> &A)
     tlaikas += duration.count();
 }
 
-void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
+void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V)
 {
     auto start = high_resolution_clock::now();
     for (int i = 0; i < A.size(); i++)
@@ -241,7 +241,7 @@ void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &
     tlaikas += duration.count();
 }
 
-void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
+void irasymasifailaK(deque<kietiakas> &K, deque<vargsiukas> &V, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream outK("kietiakai.txt");

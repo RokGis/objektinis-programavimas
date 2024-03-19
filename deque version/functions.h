@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <limits>
 #include <algorithm>
-#include <vector>
+#include <deque>
 #include <cstdlib>
 #include <ctime>
 #include <string>
@@ -17,7 +17,7 @@ struct studentas
 {
     string vardas;
     string pavarde;
-    vector<int> ndrez; //sudaromas vektorius
+    deque<int> ndrez; //sudaromas vektorius
     int erez;
     double gbalas;
 };
@@ -38,14 +38,14 @@ struct vargsiukas
 
 extern int tlaikas;
 
-void skaitymasisfailo(vector<studentas> &A, char budas, char ivedbudas);
-void isvedimas(vector<studentas> &A, char budas);
+void skaitymasisfailo(deque<studentas> &A, char budas, char ivedbudas);
+void isvedimas(deque<studentas> &A, char budas);
 void pazymiuived(studentas &new_studentas, char budas, int ivedbudas);
 void skaiciavimas(studentas &new_studentas, int sum, char budas);
-void irasymasifaila(vector<studentas> &A, char budas);
+void irasymasifaila(deque<studentas> &A, char budas);
 bool rikiavimasgbalas(const studentas &a, const studentas &b);
 bool rikiavimasvardas(const studentas &a, const studentas &b);
 bool rikiavimaspavarde(const studentas &a, const studentas &b);
-void rikiavimas(vector<studentas> &A);
-void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V);
-void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas);
+void rikiavimas(deque<studentas> &A);
+void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V);
+void irasymasifailaK(deque<kietiakas> &K, deque<vargsiukas> &V, char budas);

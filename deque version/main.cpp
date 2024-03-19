@@ -4,9 +4,9 @@
 
 int main()
 {
-    vector<std::string> vardai = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas"};
+    deque<std::string> vardai = {"Jonas", "Vytautas", "Tomas", "Mindaugas", "Antanas", "Darius", "Rokas", "Matas", "Lukas"};
 
-    vector<std::string> pavardes = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis"};
+    deque<std::string> pavardes = {"Kazlauskas", "Jankauskas", "Petrauskas", "Stankevicius", "Vasiliauskas", "Vaigauskas", "Gilys", "Gavenas", "Gruodis"};
 
     srand(time(nullptr));
 
@@ -24,9 +24,9 @@ int main()
         }
         char ski;
 
-        vector<studentas> A; //sudaromas vektorius
-        vector<kietiakas> K; 
-        vector<vargsiukas> V; 
+        deque<studentas> A; //sudaromas vektorius
+        deque<kietiakas> K; 
+        deque<vargsiukas> V; 
 
         if ((ivedbudas == 1 || ivedbudas == 2) && duomskait == 'f')
         {

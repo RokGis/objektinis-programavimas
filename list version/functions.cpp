@@ -270,11 +270,11 @@ void rikiavimas(list<studentas> &A)
 void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V) {
     auto start = high_resolution_clock::now();
 
-    auto partition_point = std::partition(A.begin(), A.end(), [](const studentas& s) {
+    auto partition_point = partition(A.begin(), A.end(), [](const studentas& s) {
         return s.gbalas >= 5.0;
     });
 
-    std::transform(A.begin(), partition_point, std::back_inserter(K), [](const studentas& s) {
+    transform(A.begin(), partition_point, std::back_inserter(K), [](const studentas& s) {
         kietiakas k;
         k.vardas = s.vardas;
         k.pavarde = s.pavarde;
@@ -282,7 +282,7 @@ void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V) {
         return k;
     });
 
-    std::transform(partition_point, A.end(), std::back_inserter(V), [](const studentas& s) {
+    transform(partition_point, A.end(), std::back_inserter(V), [](const studentas& s) {
         vargsiukas v;
         v.vardas = s.vardas;
         v.pavarde = s.pavarde;

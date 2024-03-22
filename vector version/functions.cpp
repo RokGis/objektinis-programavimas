@@ -213,19 +213,40 @@ void rikiavimas(vector<studentas> &A)
     tlaikas += duration.count();
 }
 
+// void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
+// {
+//     auto start = high_resolution_clock::now();
+//     for (int i = 0; i < A.size(); i++)
+//     {
+//         if (A[i].gbalas >= 5.0)
+//         {
+//             kietiakas k;
+//             k.vardas = A[i].vardas;
+//             k.pavarde = A[i].pavarde;
+//             k.gbalas = A[i].gbalas;
+//             K.push_back(k);
+//         }
+//         if (A[i].gbalas < 5.0)
+//         {
+//             vargsiukas v;
+//             v.vardas = A[i].vardas;
+//             v.pavarde = A[i].pavarde;
+//             v.gbalas = A[i].gbalas;
+//             V.push_back(v);
+//         }
+//     }
+//     auto stop = high_resolution_clock::now();
+//     auto duration = duration_cast<milliseconds>(stop - start);
+
+//     cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
+//     tlaikas += duration.count();
+// }
+
 void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V)
 {
     auto start = high_resolution_clock::now();
-    for (int i = 0; i < A.size(); i++)
+    for (int i = A.size()-1; i >= 0; i--)
     {
-        if (A[i].gbalas >= 5.0)
-        {
-            kietiakas k;
-            k.vardas = A[i].vardas;
-            k.pavarde = A[i].pavarde;
-            k.gbalas = A[i].gbalas;
-            K.push_back(k);
-        }
         if (A[i].gbalas < 5.0)
         {
             vargsiukas v;
@@ -233,6 +254,7 @@ void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &
             v.pavarde = A[i].pavarde;
             v.gbalas = A[i].gbalas;
             V.push_back(v);
+            A.pop_back();
         }
     }
     auto stop = high_resolution_clock::now();
@@ -242,7 +264,7 @@ void skirstymas(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &
     tlaikas += duration.count();
 }
 
-void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
+void irasymasifailaK(vector<studentas> &A, vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream outK("kietiakai.txt");
@@ -254,12 +276,17 @@ void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
     else if (budas=='m'){
          bufferK << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     bufferK << "---------------------------------------------------------------------------------------------------" << endl;
-    for (int i = 0; i < K.size(); i++)
+    // for (int i = 0; i < K.size(); i++)
+    // {
+    //     bufferK << setw(25) << left << K[i].vardas << setw(25) << left << K[i].pavarde << setw(25) << left << fixed << setprecision(2) << K[i].gbalas << endl;
+    // }
+    for (int i = 0; i < A.size(); i++)
     {
-        bufferK << setw(25) << left << K[i].vardas << setw(25) << left << K[i].pavarde << setw(25) << left << fixed << setprecision(2) << K[i].gbalas << endl;
+        bufferK << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
     }
     outK << bufferK.str();
     outK.close();
+    bufferK.clear();
     ofstream outV("vargsiukai.txt");
     ostringstream bufferV;
     if (budas == 'v')
@@ -275,6 +302,7 @@ void irasymasifailaK(vector<kietiakas> &K, vector<vargsiukas> &V, char budas)
     }
     outV << bufferV.str();
     outV.close();
+    bufferV.clear();
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
     cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;

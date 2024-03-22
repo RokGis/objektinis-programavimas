@@ -43,6 +43,7 @@ int failugeneravimas ()
 
         tlaikas += duration.count();
         return 0;
+        buffer.clear();
     }
     else
         return 0;

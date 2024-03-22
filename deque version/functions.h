@@ -48,4 +48,4 @@ bool rikiavimasvardas(const studentas &a, const studentas &b);
 bool rikiavimaspavarde(const studentas &a, const studentas &b);
 void rikiavimas(deque<studentas> &A);
 void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V);
-void irasymasifailaK(deque<kietiakas> &K, deque<vargsiukas> &V, char budas);
+void irasymasifailaK(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V, char budas);

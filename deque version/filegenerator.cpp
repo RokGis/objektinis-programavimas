@@ -36,6 +36,7 @@ int failugeneravimas ()
         }
         out << buffer.str();
         out.close();
+        buffer.clear();
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(stop - start);
 

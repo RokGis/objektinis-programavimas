@@ -42,6 +42,7 @@ int failugeneravimas ()
         cout << "Failų generavimas užtruko: " << duration.count() << " milliseconds" << endl;
 
         tlaikas += duration.count();
+        buffer.clear();
         return 0;
     }
     else

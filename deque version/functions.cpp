@@ -6,7 +6,7 @@ int tlaikas = 0;
 void skaitymasisfailo(deque<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000.txt");
+    ifstream in("studentai10000000.txt");
     
     try {
         if (!in.is_open()) {
@@ -212,7 +212,7 @@ void rikiavimas(deque<studentas> &A)
     cout << "Rūšiavimas (sort) truko: " << duration.count() << " miliseconds" << endl;
     tlaikas += duration.count();
 }
-
+////1 strategija
 // void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V)
 // {
 //     auto start = high_resolution_clock::now();
@@ -242,27 +242,61 @@ void rikiavimas(deque<studentas> &A)
 //     tlaikas += duration.count();
 // }
 
-void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V)
-{
+////2 strategija
+// void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V)
+// {
+//     auto start = high_resolution_clock::now();
+//     for (int i = A.size()-1; i >= 0; i--)
+//     {
+//         if (A[i].gbalas < 5.0)
+//         {
+//             vargsiukas v;
+//             v.vardas = A[i].vardas;
+//             v.pavarde = A[i].pavarde;
+//             v.gbalas = A[i].gbalas;
+//             V.push_back(v);
+//             A.pop_back();
+//         }
+//     }
+//     auto stop = high_resolution_clock::now();
+//     auto duration = duration_cast<milliseconds>(stop - start);
+
+//     cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
+//     tlaikas += duration.count();
+// }
+
+//3 strategija
+void skirstymas(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V) {
     auto start = high_resolution_clock::now();
-    for (int i = A.size()-1; i >= 0; i--)
-    {
-        if (A[i].gbalas < 5.0)
-        {
-            vargsiukas v;
-            v.vardas = A[i].vardas;
-            v.pavarde = A[i].pavarde;
-            v.gbalas = A[i].gbalas;
-            V.push_back(v);
-            A.pop_back();
-        }
-    }
+    
+    auto partition_point = partition(A.begin(), A.end(), [](const studentas& s) {
+        return s.gbalas >= 5.0;
+    });
+
+    transform(A.begin(), partition_point, back_inserter(K), [](const studentas& s) {
+        kietiakas k;
+        k.vardas = s.vardas;
+        k.pavarde = s.pavarde;
+        k.gbalas = s.gbalas;
+        return k;
+    });
+
+    transform(partition_point, A.end(), back_inserter(V), [](const studentas& s) {
+        vargsiukas v;
+        v.vardas = s.vardas;
+        v.pavarde = s.pavarde;
+        v.gbalas = s.gbalas;
+        return v;
+    });
+
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
 
     cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
     tlaikas += duration.count();
 }
+
+
 
 void irasymasifailaK(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas> &V, char budas)
 {
@@ -276,14 +310,16 @@ void irasymasifailaK(deque<studentas> &A, deque<kietiakas> &K, deque<vargsiukas>
     else if (budas=='m'){
          bufferK << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     bufferK << "---------------------------------------------------------------------------------------------------" << endl;
-    // for (int i = 0; i < K.size(); i++)
-    // {
-    //     bufferK << setw(25) << left << K[i].vardas << setw(25) << left << K[i].pavarde << setw(25) << left << fixed << setprecision(2) << K[i].gbalas << endl;
-    // }
-    for (int i = 0; i < A.size(); i++)
+    //1 strategija
+    for (int i = 0; i < K.size(); i++)
     {
-        bufferK << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+        bufferK << setw(25) << left << K[i].vardas << setw(25) << left << K[i].pavarde << setw(25) << left << fixed << setprecision(2) << K[i].gbalas << endl;
     }
+    // //2 strategija
+    // for (int i = 0; i < A.size(); i++)
+    // {
+    //     bufferK << setw(25) << left << A[i].vardas << setw(25) << left << A[i].pavarde << setw(25) << left << fixed << setprecision(2) << A[i].gbalas << endl;
+    // }
     outK << bufferK.str();
     outK.close();
     bufferK.clear();

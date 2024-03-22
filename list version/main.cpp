@@ -36,7 +36,7 @@ int main()
             if (ski == 't')
             {
                 skirstymas(A, K, V);
-                irasymasifailaK(K, V, budas);
+                irasymasifailaK(A, K, V, budas);
             }
             else if (ski == 'n')
             {
@@ -63,7 +63,7 @@ int main()
             if (ski == 't')
             {
                 skirstymas(A, K, V);
-                irasymasifailaK(K, V, budas);
+                irasymasifailaK(A, K, V, budas);
             }
             else if (ski == 'n')
             {
@@ -97,7 +97,7 @@ int main()
             if (ski == 't')
             {
                 skirstymas(A, K, V);
-                irasymasifailaK(K, V, budas);
+                irasymasifailaK(A, K, V, budas);
             }
             else if (ski == 'n')
             {

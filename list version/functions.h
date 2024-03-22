@@ -48,4 +48,4 @@ bool rikiavimasvardas(const studentas &a, const studentas &b);
 bool rikiavimaspavarde(const studentas &a, const studentas &b);
 void rikiavimas(list<studentas> &A);
 void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V);
-void irasymasifailaK(list<kietiakas> &K, list<vargsiukas> &V, char budas);
+void irasymasifailaK(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V, char budas);

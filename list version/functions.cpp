@@ -6,7 +6,7 @@ int tlaikas = 0;
 void skaitymasisfailo(list<studentas> &A, char budas, char ivedbudas)
 {
     int sum = 0;
-    ifstream in("studentai10000000.txt");
+    ifstream in("studentai10000.txt");
     
     try {
         if (!in.is_open()) {
@@ -214,26 +214,48 @@ void rikiavimas(list<studentas> &A)
     tlaikas += duration.count();
 }
 
+// void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
+// {
+//     auto start = high_resolution_clock::now();
+//     for (const auto& studentas : A)
+//     {
+//         if (studentas.gbalas >= 5.0)
+//         {
+//             kietiakas k;
+//             k.vardas = studentas.vardas;
+//             k.pavarde = studentas.pavarde;
+//             k.gbalas = studentas.gbalas;
+//             K.push_back(k);
+//         }
+//         if (studentas.gbalas < 5.0)
+//         {
+//             vargsiukas v;
+//             v.vardas = studentas.vardas;
+//             v.pavarde = studentas.pavarde;
+//             v.gbalas = studentas.gbalas;
+//             V.push_back(v);
+//         }
+//     }
+//     auto stop = high_resolution_clock::now();
+//     auto duration = duration_cast<milliseconds>(stop - start);
+
+//     cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
+//     tlaikas += duration.count();
+// }
+
 void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
 {
     auto start = high_resolution_clock::now();
-    for (const auto& studentas : A)
+    for (auto studentas = --A.end(); studentas != A.begin(); --studentas)
     {
-        if (studentas.gbalas >= 5.0)
-        {
-            kietiakas k;
-            k.vardas = studentas.vardas;
-            k.pavarde = studentas.pavarde;
-            k.gbalas = studentas.gbalas;
-            K.push_back(k);
-        }
-        if (studentas.gbalas < 5.0)
+        if (studentas->gbalas < 5.0)
         {
             vargsiukas v;
-            v.vardas = studentas.vardas;
-            v.pavarde = studentas.pavarde;
-            v.gbalas = studentas.gbalas;
+            v.vardas = studentas->vardas;
+            v.pavarde = studentas->pavarde;
+            v.gbalas = studentas->gbalas;
             V.push_back(v);
+            studentas = A.erase(studentas);
         }
     }
     auto stop = high_resolution_clock::now();
@@ -243,7 +265,7 @@ void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
     tlaikas += duration.count();
 }
 
-void irasymasifailaK(list<kietiakas> &K, list<vargsiukas> &V, char budas)
+void irasymasifailaK(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V, char budas)
 {
     auto start = high_resolution_clock::now(); 
     ofstream outK("kietiakai.txt");
@@ -255,12 +277,17 @@ void irasymasifailaK(list<kietiakas> &K, list<vargsiukas> &V, char budas)
     else if (budas=='m'){
          bufferK << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     bufferK << "---------------------------------------------------------------------------------------------------" << endl;
-    for (const auto& k : K)
+    // for (const auto& k : K)
+    // {
+    //     bufferK << setw(25) << left << k.vardas << setw(25) << left << k.pavarde << setw(25) << left << fixed << setprecision(2) << k.gbalas << endl;
+    // }
+    for (const auto& s : A)
     {
-        bufferK << setw(25) << left << k.vardas << setw(25) << left << k.pavarde << setw(25) << left << fixed << setprecision(2) << k.gbalas << endl;
+        bufferK << setw(25) << left << s.vardas << setw(25) << left << s.pavarde << setw(25) << left << fixed << setprecision(2) << s.gbalas << endl;
     }
     outK << bufferK.str();
     outK.close();
+    bufferK.clear();
     ofstream outV("vargsiukai.txt");
     ostringstream bufferV;
     if (budas == 'v')
@@ -276,6 +303,7 @@ void irasymasifailaK(list<kietiakas> &K, list<vargsiukas> &V, char budas)
     }
     outV << bufferV.str();
     outV.close();
+    bufferV.clear();
     auto stop = high_resolution_clock::now(); // Stop measuring time
     auto duration = duration_cast<milliseconds>(stop - start); 
     cout << "Writing to file took: " << duration.count() << " milliseconds" << endl;

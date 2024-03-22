@@ -213,7 +213,7 @@ void rikiavimas(list<studentas> &A)
     cout << "Rūšiavimas (sort) truko: " << duration.count() << " miliseconds" << endl;
     tlaikas += duration.count();
 }
-
+// //1 strategija
 // void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
 // {
 //     auto start = high_resolution_clock::now();
@@ -243,21 +243,53 @@ void rikiavimas(list<studentas> &A)
 //     tlaikas += duration.count();
 // }
 
-void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
-{
+// //2 strategija
+// void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V)
+// {
+//     auto start = high_resolution_clock::now();
+//     for (auto studentas = --A.end(); studentas != A.begin(); --studentas)
+//     {
+//         if (studentas->gbalas < 5.0)
+//         {
+//             vargsiukas v;
+//             v.vardas = studentas->vardas;
+//             v.pavarde = studentas->pavarde;
+//             v.gbalas = studentas->gbalas;
+//             V.push_back(v);
+//             studentas = A.erase(studentas);
+//         }
+//     }
+//     auto stop = high_resolution_clock::now();
+//     auto duration = duration_cast<milliseconds>(stop - start);
+
+//     cout << "Studentų skirstymas užtruko: " << duration.count() << " milliseconds" << endl;
+//     tlaikas += duration.count();
+// }
+
+//3 strategija
+void skirstymas(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V) {
     auto start = high_resolution_clock::now();
-    for (auto studentas = --A.end(); studentas != A.begin(); --studentas)
-    {
-        if (studentas->gbalas < 5.0)
-        {
-            vargsiukas v;
-            v.vardas = studentas->vardas;
-            v.pavarde = studentas->pavarde;
-            v.gbalas = studentas->gbalas;
-            V.push_back(v);
-            studentas = A.erase(studentas);
-        }
-    }
+
+    auto partition_point = std::partition(A.begin(), A.end(), [](const studentas& s) {
+        return s.gbalas >= 5.0;
+    });
+
+    std::transform(A.begin(), partition_point, std::back_inserter(K), [](const studentas& s) {
+        kietiakas k;
+        k.vardas = s.vardas;
+        k.pavarde = s.pavarde;
+        k.gbalas = s.gbalas;
+        return k;
+    });
+
+    std::transform(partition_point, A.end(), std::back_inserter(V), [](const studentas& s) {
+        vargsiukas v;
+        v.vardas = s.vardas;
+        v.pavarde = s.pavarde;
+        v.gbalas = s.gbalas;
+        return v;
+    });
+
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
 
@@ -277,14 +309,16 @@ void irasymasifailaK(list<studentas> &A, list<kietiakas> &K, list<vargsiukas> &V
     else if (budas=='m'){
          bufferK << setw(25) << left << "Vardas" << setw(25) << left << "Pavarde" << setw(25) << left << "Galutinis (Med.)" << endl;}
     bufferK << "---------------------------------------------------------------------------------------------------" << endl;
-    // for (const auto& k : K)
-    // {
-    //     bufferK << setw(25) << left << k.vardas << setw(25) << left << k.pavarde << setw(25) << left << fixed << setprecision(2) << k.gbalas << endl;
-    // }
-    for (const auto& s : A)
+    //1 strategija
+    for (const auto& k : K)
     {
-        bufferK << setw(25) << left << s.vardas << setw(25) << left << s.pavarde << setw(25) << left << fixed << setprecision(2) << s.gbalas << endl;
+        bufferK << setw(25) << left << k.vardas << setw(25) << left << k.pavarde << setw(25) << left << fixed << setprecision(2) << k.gbalas << endl;
     }
+    // //2 strategija
+    // for (const auto& s : A)
+    // {
+    //     bufferK << setw(25) << left << s.vardas << setw(25) << left << s.pavarde << setw(25) << left << fixed << setprecision(2) << s.gbalas << endl;
+    // }
     outK << bufferK.str();
     outK.close();
     bufferK.clear();
